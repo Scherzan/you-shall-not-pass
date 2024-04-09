@@ -8,8 +8,13 @@ Code and Material for talk at PyConDE2024:
     streamlit run talk_app.py
 
 -> working on branches:
-create a pyproject.lock for the branch and everytime you work on a branch run poetry install 
--> synchronizing branches and main brnach poetry.lock will be step for when merging.
+workflow:
+1. merge main into branch
+2. update the poetry.lock for branch (dont push)
+-> at some point when you have switch to a different branch and swith back do:
+-> 3. run poetry update
+-> 4. run poetry install
+
 more info: https://github.com/python-poetry/poetry/issues/272
 
 
