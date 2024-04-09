@@ -1,12 +1,16 @@
 # you-shall-not-pass
 Code and Material for talk at PyConDE2024:
 
-Info on vulnerability CVE-2024-23752
+- run streamlit app with:
 
-NIST Info: https://nvd.nist.gov/vuln/detail/CVE-2024-23752
-Git-Issue related: https://github.com/Sinaptik-AI/pandas-ai/issues/868
+    poetry shell
 
+    streamlit run talk_app.py
 
-In Git-Issue POC code in pandas_exploit.py is presented:
+-> working on branches:
+create a pyproject.lock for the branch and everytime you work on a branch run poetry install 
+-> synchronizing branches and main brnach poetry.lock will be step for when merging.
+more info: https://github.com/python-poetry/poetry/issues/272
+
 
 
