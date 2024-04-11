@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "you-shall-not-pass"
+version = "0.1.0"
+description = "Package for PyConDE2024 presentation"
+authors = ["Antonia Scherz, Roman Krafft"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.33.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
