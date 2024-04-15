@@ -1,0 +1,8 @@
+https://www.youtube.com/watch?v=i1QqhGsbX6Y
+https://www.youtube.com/watch?v=VWWgkF-0cDQ
+https://github.com/pypa/pipenv
+https://github.com/jazzband/pip-tools
+poetry
+https://medium.com/packagr/using-pip-compile-to-manage-dependencies-in-your-python-packages-8451b21a949e
+
+
