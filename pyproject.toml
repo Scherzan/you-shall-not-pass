@@ -9,6 +9,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 streamlit = "^1.33.0"
+gradio = "4.10.0"
+streamlit-code-editor = "^0.1.12"
+streamlit-ace = "^0.1.1"
 
 
 [build-system]
