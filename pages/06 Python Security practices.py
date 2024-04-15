@@ -48,6 +48,15 @@ with tab2:
          -> pipenv
          -> poetry
          -> pip-tools
+         -> conda: 
+            - conda can create an environment file in the yaml format to distribute to others using also conda. Create it using: 
+               - conda env export > environment.yml
+            - and then create a new environment with
+               - conda env create -f environment.yaml
+            - now you can share the yaml-file with everyone. If you only want to adapt to updates you need the following command:
+               - conda env update --file environment.yml --prune
+            - you can actually use pip inside of conda and have access to many of pips features (although it can make it own problems)
+            - Condas biggest selling point is its large usage in scientific computing and AI. The big community with this focus uses conda and develops it with this use case in mind.
          there are others: like hatch, pdm, rye.. not time to go into all. 
             What we can do: Use lockfiles because version pins, 
          this can f.e. mitigate squat attacks, avoids dependency confusion. 
@@ -91,27 +100,27 @@ Since this is such a relevant functionality for package management systems, they
 Here is the command in poetry:
 """)
 # Verbally: with these structures conflict resolution is achieved by finding all requirements for a certain package an then trying to fulfill them all
-st.code("""
-poetry show --tree
-""", 
-        language='bash')
-st.write("And in conda it looks similar:")
-st.code("""
-conda list --tree
-""", 
-        language='bash')
-st.write("pip itself needs another package called pipdeptree:")
-st.code("""
-pip install pipdeptree
-pipdeptree
-""", 
-        language='bash')
-st.write("pipenv makes it the easiest:")
-st.code("""
-pipenv graph
-""", 
-        language='bash')
-st.write("The resulting tree will always look the same and can be searched, even if most sophisticated security tools should do this for you, it never hurts to know where to look yourself if something needs to be done")
+   st.code("""
+   poetry show --tree
+   """, 
+         language='bash')
+   st.write("And in conda it looks similar:")
+   st.code("""
+   conda list --tree
+   """, 
+         language='bash')
+   st.write("pip and also pip-tools need another package called pipdeptree:")
+   st.code("""
+   pip install pipdeptree
+   pipdeptree
+   """, 
+         language='bash')
+   st.write("pipenv makes it the easiest:")
+   st.code("""
+   pipenv graph
+   """, 
+         language='bash')
+   st.write("The resulting tree will always look the same and can be searched, even if most sophisticated security tools should do this for you, it never hurts to know where to look yourself if something needs to be done")
 
 with tab5:
    st.write(""" 
