@@ -1,27 +1,21 @@
 import streamlit as st
 
-tab0, tab1, tab2, tab3, tab4, tab5  = st.tabs(["risk mitigation","package management", "lockfiles", "hashes", "dependency trees", "package management"])
+
+tab0, tab1, tab2, tab3, tab4, tab5  = st.tabs(["coding practices","package management", "lockfiles", "hashes", "dependency trees", "tools"])
 
 with tab0:
-    st.write("### structure of chapter:")
+    st.write("### checklist style (überarbeiten)")
     st.write("""
-            1. proper package management:
-             2. scan for vulnerabilities of code (before commiting/publshing anywhere)
-             3. stay informed (tackle info fatigue) + ressources
+             draw analogie to basics (update, code analysis, keep secrets, stay informed), \n
+             additions when publishing, \n
+             additions web apps -> not go into - input validation \n
+
+             1. update your software (manage dependencies)
+             2. use antivirus software (scan your code)
+             3. new* stay informed (design smart notification system)
         """)
     
-    st.write("""
-            
-    
-            1.          
-            - pip security
-                     - verifikation
-                     - trusted authors
-            pypi: security update (check release): voluntary two factor authentication requirements. 2fa mandate for critical projects
-                     (top 1%)
-                     they hand out hardware keys
-                     4000 google titan security keys
-        """)
+
     
     
 
@@ -33,7 +27,7 @@ with tab1:
          - lockfiles
          - hashes stored (go through in moment)
          - store dependency trees
-    """)
+    """) # word on python updates -> important too.
    
 with tab2:
    st.write("""         
@@ -85,3 +79,17 @@ with tab5:
             
             same procedure for poetry:    
             """)    
+
+# on security when publishing to pypi:
+st.write("""
+            
+    
+            1.          
+            - pip security
+                     - verifikation
+                     - trusted authors
+            pypi: security update (check release): voluntary two factor authentication requirements. 2fa mandate for critical projects
+                     (top 1%)
+                     they hand out hardware keys
+                     4000 google titan security keys
+        """)
