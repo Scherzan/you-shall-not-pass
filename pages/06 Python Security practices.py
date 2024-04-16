@@ -48,6 +48,15 @@ with tab2:
          -> pipenv
          -> poetry
          -> pip-tools
+         -> conda: 
+            - conda can create an environment file in the yaml format to distribute to others using also conda. Create it using: 
+               - conda env export > environment.yml
+            - and then create a new environment with
+               - conda env create -f environment.yaml
+            - now you can share the yaml-file with everyone. If you only want to adapt to updates you need the following command:
+               - conda env update --file environment.yml --prune
+            - you can actually use pip inside of conda and have access to many of pips features (although it can make it own problems)
+            - Condas biggest selling point is its large usage in scientific computing and AI. The big community with this focus uses conda and develops it with this use case in mind.
          there are others: like hatch, pdm, rye.. not time to go into all. 
             What we can do: Use lockfiles because version pins, 
          this can f.e. mitigate squat attacks, avoids dependency confusion. 
@@ -63,7 +72,55 @@ with tab3:
             """)  
 
 with tab4:
-   st.write(""" dep trees""")  
+   st.title(""" Dependency Trees""") 
+   st.markdown(""" Python is a highly interdependent language and we all use many packages without giving it much thought. 
+This builds a big pile of libraries that accumulate in even smaller scripts to the point that it gave birth to a whole landscape of package management systems like pip, poetry, conda and much more.
+Most of the times the dependencies will be displayed in a requirements file or as a list of actively installed packages.
+But this only gives an impression of either the surface or the final picture.
+You won't know why a package X is ACTUALLY needed in your code if you did not actively imported it.
+Dependency Trees are a way to display all the packages your code needs, along with their path into the environment.
+
+Lets say you have two known dependencies for package A und B, a DT might look like this
+- A
+   - C
+   - D
+      - E
+- B
+   - C
+
+This gives a much clearer overview which package is actively installed and required and which is only a dependent.
+
+And while these structures are essential for the package management systems itself, most Developers do not keep track of them.
+But with them we can now see in detail which package forces us to use a certain Version of another package.
+This becomes very important if we come across vulnerabilities and want to update to a newer version.
+Because now we know which higher-leveled package we might actually need to update in order to increase the version of a dependent package.
+               
+Since this is such a relevant functionality for package management systems, they can (as far as we are aware) all produce them with ease. 
+               
+Here is the command in poetry:
+""")
+# Verbally: with these structures conflict resolution is achieved by finding all requirements for a certain package an then trying to fulfill them all
+   st.code("""
+   poetry show --tree
+   """, 
+         language='bash')
+   st.write("And in conda it looks similar:")
+   st.code("""
+   conda list --tree
+   """, 
+         language='bash')
+   st.write("pip and also pip-tools need another package called pipdeptree:")
+   st.code("""
+   pip install pipdeptree
+   pipdeptree
+   """, 
+         language='bash')
+   st.write("pipenv makes it the easiest:")
+   st.code("""
+   pipenv graph
+   """, 
+         language='bash')
+   st.write("The resulting tree will always look the same and can be searched, even if most sophisticated security tools should do this for you, it never hurts to know where to look yourself if something needs to be done")
 
 with tab5:
    st.write(""" 
