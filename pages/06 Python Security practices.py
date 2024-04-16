@@ -49,13 +49,13 @@ with tab2:
          -> poetry
          -> pip-tools
          -> conda: 
-            - conda can create an environment file in the yaml format to distribute to others using also conda. Create it using: 
-               - conda env export > environment.yml
+            - conda can create sort of an environment file in the yaml format to distribute to others using also conda. Create it using: 
+               - conda list --explicit --export --md5 > environment.yml
             - and then create a new environment with
-               - conda env create -f environment.yaml
+               - conda create -n <name> -f environment.yaml
             - now you can share the yaml-file with everyone. If you only want to adapt to updates you need the following command:
-               - conda env update --file environment.yml --prune
-            - you can actually use pip inside of conda and have access to many of pips features (although it can make it own problems)
+               - conda update --file environment.yml 
+            - you can alternatively actually use pip inside of conda and have access to many of pips features (although it can make it own problems)
             - Condas biggest selling point is its large usage in scientific computing and AI. The big community with this focus uses conda and develops it with this use case in mind.
          there are others: like hatch, pdm, rye.. not time to go into all. 
             What we can do: Use lockfiles because version pins, 
