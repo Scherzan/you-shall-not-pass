@@ -18,9 +18,11 @@ It is always important to know what your goal is during scanning. There are thre
 If we Code for ourself we still want to create the best code we can. 
 
 Advantages for Code scanners even for your self:
-- They raise the general coding hygiene, which is all the more important in a lax language like python. 
+- They raise the general coding hygiene, which is all the more important in a lax language like python.
+- Remind you of your favorite task: Code documentation
 - They help us uphold certain coding guidelines which can help make our code easier to understand. Even if the only person reading it is ourselves in 6 months! 
 - Reduce Code smells
+- Makes it easier to have a basic overview over dependencies and known vulnerabilities
 
 Scanners that specialize in this use case are also known as linters. Most IDEs have linters integrated but you should make sure to adapt them to your own style.
 There are many linters to choose from and there are as always debates about which is the best. But nothing is stopping you from using two or more at the same time. Some Linters that are widely used are: 
@@ -40,16 +42,21 @@ Other Code Scanners also search for known vulnerabilities in your dependencies a
 
 #### Publishing Code
 
-Publish code => automate
-baseline CI/CD
-pipeline your scanners
-set thresholds prohibit commits/merges
+If you publish your code, most likely via Github or Lab, you should automate your chosen scanners. 
+- don't have to do many scanners one by one but instead have an automated pipeline
+- can prohibit merges unless certain quality and safety criteria are met. 
+- have an indicator for others that your code is actually well done
+- one time investment, that can be the baseline for your knowledge about CI/CD
 
 #### Publish your Code on PyPi
 
-PyPi has a REALLY low requirement to publish
-you are all nice people, so you WANT safe code => YOU have to hold your packages to a very high standard
-(although this is beginning to change)
+PyPi has a really low requirement to publish, which is great to have as many contributors as possible. But this makes it easier for bad actors, active ones or not.
+
+We are all good, moral people
+
+=> We would only publish packages that are as safe, clean and reliable as possible
+
+=> We need to hold ourselves to a very high standard and enforce it for ourselves before publishing packages for others
 
  """)
       
