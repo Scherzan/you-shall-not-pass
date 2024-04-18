@@ -1,5 +1,9 @@
 import streamlit as st
 
+st.set_page_config(
+    layout="wide",
+)
+
 tab0, tab1, tab2, tab3, tab4, tab5  = st.tabs(["risk mitigation","package management", "lockfiles", "hashes", "dependency trees", "package management"])
 
 with tab0:
