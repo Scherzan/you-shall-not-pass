@@ -24,12 +24,10 @@ tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["vulnerabilities", "exploits", "p
 #of that problem, usually with malicious intent.
 
 with tab1:
-    st.write("### structure of chapter:")
-    st.write("""
-             visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
-             continue exploit -> search and using breakacge in thinking
-             what are vulnerabilities vs bugs 
-    """)
+    st.image("./pages/scripts/assets/vunerabilityvsbug.jpeg")
+#visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
+#continue exploit -> search and using breakacge in thinking
+#what are vulnerabilities vs bugs 
 
 with tab2:
         st.write("""
