@@ -1,6 +1,8 @@
 import streamlit as st
 
-col0, col1 = st.columns(2)
+st.set_page_config(
+    layout="wide",
+)
 
 if "pylint_on" not in st.session_state:
     st.session_state["pylint_on"] = False
