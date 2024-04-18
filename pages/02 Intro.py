@@ -57,13 +57,16 @@ with tab2:
 # human behaviour = make typos
 # if you have some personal information and behave like a human > susceptible to hacking activity
 with tab3:
-    st.write("""
-            -> overview relevant security aspects \n
-            -> practical examples of what code can do to python applications  \n
-            -> practices and tools to strengthen your applciations \n
-             3 images (heaven/hell/fighter)
-             """)             
-             
+    st.image("./pages/scripts/assets/heaven_hell_footsteps.png") # anpassung navigate securly and compromised systems and data
+    #st.write("""
+    #        -> overview relevant security aspects \n
+    #        -> practical examples of what code can do to python applications  \n
+    #        -> practices and tools to strengthen your applciations \n
+    #         """)             
+
+#1. How is it supposed to work?  heaven
+#2. What can go wrong? hell
+#3. how to we mitigate risk of it going wrong? footsteps      
 # look into: IT-Security principles in general, coding principles apply to python, python specific practices \n
 
     

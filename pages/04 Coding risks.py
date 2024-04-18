@@ -26,8 +26,8 @@ tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["vulnerabilities", "exploits", "p
 with tab1:
     st.write("### structure of chapter:")
     st.write("""
-             # visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
-             # continue exploit -> search and using breakacge in thinking
+             visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
+             continue exploit -> search and using breakacge in thinking
              what are vulnerabilities vs bugs 
     """)
 
@@ -88,7 +88,7 @@ with tab3:
         
         dummy_cmd = "curl --list-only --path-as-is https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/../../../path/to/asset.jpeg --output /path/to/your/copy.jpeg"
         st.write(dummy_cmd)
-        content = st_ace(language='css')
+        content = st_ace(language='css', theme="terminal", wrap=True)
 
         st.image("./pages/scripts/assets/gradio_demo.jpg")
 
