@@ -1,0 +1,57 @@
+name: Code Scanning
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code-scanning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        run: |
+          poetry install
+
+      - name: Run pylint
+        run: |
+          poetry run pylint code_scanners_examples/bad_linting.py --output-format=parseable > pylint_report.txt
+        continue-on-error: true
+
+      - name: Run radon
+        run: |
+          poetry run radon cc code_scanners_examples/bad_complexity.py --json > radon_report.json
+        continue-on-error: true
+
+      - name: Export Requirements
+        run: |
+          poetry export --format requirements.txt --output requirements.txt
+
+      - name: Run safety
+        run: |
+          poetry run safety check -r requirements.txt --json > safety_report.json
+        continue-on-error: true
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-reports
+          path: |
+            pylint_report.txt
+            radon_report.json
+            safety_report.json
