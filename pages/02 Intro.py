@@ -1,6 +1,9 @@
 
 import streamlit as st
 
+st.set_page_config(
+    layout="wide",
+)
 
 tab1, tab2, tab3  = st.tabs(["are you involved?","yes if you are human", "what to do?"])
 
