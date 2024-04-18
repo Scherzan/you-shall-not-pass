@@ -1,5 +1,9 @@
 import streamlit as st
 
+st.set_page_config(
+    layout="wide",
+)
+
 tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["coding security", "vulnerabilities", "path traversal", "code injection", "typosquatting", "attacking"])
 
 with tab1:

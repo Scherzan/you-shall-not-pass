@@ -1,6 +1,8 @@
 import streamlit as st
 
-col0, col1 = st.columns(2)
+st.set_page_config(
+    layout="wide",
+)
 
 if "pylint_on" not in st.session_state:
     st.session_state["pylint_on"] = False
@@ -8,12 +10,12 @@ if "radon_on" not in st.session_state:
     st.session_state["radon_on"] = False
 if "safety_on" not in st.session_state:
     st.session_state["safety_on"] = False
-if "Github_pipeline_on" not in st.session_state:
-    st.session_state["Github_pipeline_on"] = False
+if "github_action" not in st.session_state:
+    st.session_state["github_action"] = False
 
 
 def switch_click(input):
-    switches = ["pylint_on", "radon_on", "safety_on", "Github_pipeline_on"]
+    switches = ["pylint_on", "radon_on", "safety_on", "github_action"]
     switches.remove(input)
     for switch in switches:
         st.session_state[switch] = False
@@ -471,7 +473,73 @@ If you publish your code, most likely via Github or Lab, you should automate you
 - can prohibit merges unless certain quality and safety criteria are met. 
 - have an indicator for others that your code is actually well done
 - one time investment, that can be the baseline for your knowledge about CI/CD
+""")
 
+st.button("show Github actions example", on_click=switch_click, args=["github_action"])
+if st.session_state["github_action"]:
+    st.code("""
+name: Code Scanning
+
+on:
+  push:
+    branches:
+      - main
+      - RomKra-patch-1
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code-scanning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        run: |
+          poetry install
+
+      - name: Run pylint
+        run: |
+          poetry run pylint code_scanners_examples/bad_linting.py --output-format=parseable > pylint_report.txt
+        continue-on-error: true
+
+      - name: Run radon
+        run: |
+          poetry run radon cc code_scanners_examples/bad_complexity.py --json > radon_report.json
+        continue-on-error: true
+
+      - name: Export Requirements
+        run: |
+          poetry export --format requirements.txt --output requirements.txt
+
+      - name: Run safety
+        run: |
+          poetry run safety check -r requirements.txt --json > safety_report.json
+        continue-on-error: true
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-reports
+          path: |
+            pylint_report.txt
+            radon_report.json
+            safety_report.json
+
+""", language="bash")
+
+st.markdown("""
 #### Publish your Code on PyPi
 
 PyPi has a really low requirement to publish, which is great to have as many contributors as possible. But this makes it easier for bad actors, active ones or not.
