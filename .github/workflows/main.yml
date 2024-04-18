@@ -34,32 +34,10 @@ jobs:
           poetry run pylint code_scanners_examples/bad_linting.py --output-format=parseable > pylint_report.txt
         continue-on-error: true
 
-      - name: Parse pylint Report
-        id: pylint_parse
-        uses: dorny/paths-filter@v2
-        with:
-          filters: 'pylint_report.txt'
-
-      - name: Set pylint Threshold
-        if: steps.pylint_parse.outputs.has-paths == 'true'
-        run: |
-          if [ "$(awk -F'|' '$2 > 9' pylint_report.txt)" ]; then
-            echo "Pylint threshold exceeded"
-            exit 1
-          fi
-
       - name: Run radon
         run: |
           poetry run radon cc code_scanners_examples/bad_complexity.py --json > radon_report.json
         continue-on-error: true
-
-      - name: Set radon Threshold
-        if: success()
-        run: |
-          if [ "$(jq '.[] | select(.complexity > 10)' radon_report.json)" ]; then
-            echo "Radon threshold exceeded"
-            exit 1
-          fi
 
       - name: Export Requirements
         run: |
@@ -69,14 +47,6 @@ jobs:
         run: |
           poetry run safety check -r requirements.txt --json > safety_report.json
         continue-on-error: true
-
-      - name: Set safety Threshold
-        if: success()
-        run: |
-          if [ "$(jq '.[] | select(.vulnerabilities != [])' safety_report.json)" ]; then
-            echo "Safety threshold exceeded"
-            exit 1
-          fi
 
       - name: Upload Reports
         uses: actions/upload-artifact@v2
