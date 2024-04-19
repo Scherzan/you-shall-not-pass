@@ -71,8 +71,8 @@ with tab1:
    - Reduce Code smells
    - Makes it easier to have a basic overview over dependencies and known vulnerabilities
 
-   Scanners that specialize in this use case are also known as linters. Most IDEs have linters integrated but you should make sure to adapt them to your own style.
-   There are many linters to choose from and there are as always debates about which is the best. But nothing is stopping you from using two or more at the same time. Some Linters that are widely used are: 
+   Scanners that specialize in increasing your general code quality are also known as linters.
+   There are many linters to choose from:
    - Pylint 
    - Flake8
    - pycodestyle
@@ -107,7 +107,7 @@ with tab1:
    Your code has been rated at 0.00/10""", language="bash")
 
    st.markdown("""
-   Other Code Scanners also search for known vulnerabilities in your dependencies and other security risks. Examples are are: 
+   Other Code Scanners search for known vulnerabilities in your dependencies and other security risks. Examples are are: 
    - Safety => do example
    - Bandit
    """)

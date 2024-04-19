@@ -5,7 +5,7 @@ from streamlit_ace import st_ace
 st.set_page_config(
     layout="wide",
 )
-tab1, tab2, tab3, tab4  = st.tabs(["vulnerabilities", "exploits", "path traversal", "code injection"])
+tab1, tab3, tab4  = st.tabs(["vulnerabilities & exploits", "path traversal", "remote code execution"])
 # taken from edx:
 #A vulnerability is a flaw in a system's design,
 #implementation or operation,
@@ -31,43 +31,37 @@ with tab1:
 #visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
 #continue exploit -> search and using breakacge in thinking
 #what are vulnerabilities vs bugs 
-
-with tab2:
     st.markdown(
 """
 ## Exploits
-
-Def: Attack using an vulnerability
-Vulnerability is only the theoretical possibility to break a system
-exploit is the piece of code actually using it
 examples:
-
-- Buffer Overflow Exploits:
-    - often caused by vulnerability in input validation
-    - uses large input size to exceed memory and access areas beyond the buffer
-    - 2003, the SQL Slammer worm exploited a buffer overflow vulnerability in Microsoft SQL Server to spread rapidly across the internet
 
 - SQL Injection Exploits:
     - badly sanitized input for queries
     - 2014, the Heartbleed vulnerability in OpenSSL allowed attackers to exploit a flaw in the implementation of the TLS protocol, leading to the exposure of sensitive information, including private keys, usernames, and passwords.
-
-- Cross-Site Scripting (XSS) Exploits:
-    - inject malicious scripts onto websites
-    - steal cookies, redirect to phishing sites, and more
-    - 2018, the Magecart group used XSS attacks to compromise thousands of websites by injecting malicious scripts into e-commerce platforms, stealing payment card details
-
-- Cross-Site Request Forgery (CSRF) Exploits:
-    - Act maliciously on an authenticated users behalf
-    - 2013, the Yahoo Mail CSRF vulnerability allowed attackers to forge requests on behalf of authenticated users, enabling them to send emails
-
-- Remote Code Execution (RCE) Exploits:
-    - execute arbitrary code on another machine
-    - 2017, the WannaCry ransomware exploited a vulnerability in the Windows SMB protocol (EternalBlue), encrypting files and demanding ransom payments from affected users.
+    - In Python: CVE-2022-34265, django had two functions (trunc and extract) that had this
+""")
+    st.image("./pages/scripts/assets/SQL_injection.png")
+    st.markdown("""
+- Buffer Overflow Exploits:
+    - often caused by vulnerability in input validation
+    - uses large input size to exceed memory and access areas beyond the buffer
+    - 2003, the SQL Slammer worm exploited a buffer overflow vulnerability in Microsoft SQL Server to spread rapidly across the internet
+    - In Python: CVE-2021-3177, the c-code below python could be reached and attacked with a buffer overflow attack
 
 - Denial of Service (DoS) and Distributed Denial of Service (DDoS) Exploits:
     - overload a service with a massive amount of accesses
     - 2016, the Mirai botnet launched a series of massive DDoS attacks disrupting internet services for millions of users by overwhelming DNS servers with a flood of malicious traffic.
-""")
+    - In Python: CVE-2021-3737, a HTTP-client could be sent into a infinite loop
+    
+- Remote Code Execution (RCE) Exploits:
+    - execute arbitrary code on another machine
+    - 2017, the WannaCry ransomware exploited a vulnerability in the Windows SMB protocol (EternalBlue), encrypting files and demanding ransom payments from affected users.
+
+- Path traversal or ../ 
+    - are a type of web security vulnerability that allows an attacker to access files or directories outside of the web server's root directory
+    - 2017, Equifax exposed the personal information of approximately 147 million people. The breach was attributed to a vulnerability in Apache Struts
+    """)
 
 
 with tab3:
@@ -103,13 +97,10 @@ with tab3:
                 if not line:
                     continue
                 st.write(line.strip())
-    
-        script_name = st.text_input('Enter the name of the python script:')
-    
         
         # When the user submits the script name, run the shell script
-        if st.button('Run'):
-            run_py_script(script_name)
+        if st.button('Run the gradio app'):
+            run_py_script("gradio_app.py")
 
     with col2:
         
@@ -160,13 +151,10 @@ with tab4:
             config_data = load_config('totally_safe_file.yaml')
             start_server(config_data)"""
         st.code(code_text)
-    
-        script_name = st.text_input('Enter the name of the python script:', key="roman_ace")
-    
         
         # When the user submits the script name, run the shell script
         if st.button('Run', key="roman_ace_button"):
-            run_py_script(script_name)
+            run_py_script("yaml_loader_ace.py")
 
     with col2:
         hide_yaml = st.checkbox("Hide yaml Content")
