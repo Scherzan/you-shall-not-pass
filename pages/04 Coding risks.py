@@ -2,7 +2,10 @@ import streamlit as st
 import subprocess
 from streamlit_ace import st_ace
 
-tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["vulnerabilities", "exploits", "path traversal", "code injection", "typosquatting", "attacking"])
+st.set_page_config(
+    layout="wide",
+)
+tab1, tab2, tab3, tab4  = st.tabs(["vulnerabilities", "exploits", "path traversal", "code injection"])
 # taken from edx:
 #A vulnerability is a flaw in a system's design,
 #implementation or operation,
@@ -30,15 +33,41 @@ with tab1:
 #what are vulnerabilities vs bugs 
 
 with tab2:
-        st.write("""
-             what are exploits 
-             3. Python specific: \n
-             What are the threats and what can I do?
-             - list of threats to adress
-             1. path traversal
-             2. code injection
-             ...
-             - how can you go about it """)
+    st.markdown(
+"""
+## Exploits
+
+Def: Attack using an vulnerability
+Vulnerability is only the theoretical possibility to break a system
+exploit is the piece of code actually using it
+examples:
+
+- Buffer Overflow Exploits:
+    - often caused by vulnerability in input validation
+    - uses large input size to exceed memory and access areas beyond the buffer
+    - 2003, the SQL Slammer worm exploited a buffer overflow vulnerability in Microsoft SQL Server to spread rapidly across the internet
+
+- SQL Injection Exploits:
+    - badly sanitized input for queries
+    - 2014, the Heartbleed vulnerability in OpenSSL allowed attackers to exploit a flaw in the implementation of the TLS protocol, leading to the exposure of sensitive information, including private keys, usernames, and passwords.
+
+- Cross-Site Scripting (XSS) Exploits:
+    - inject malicious scripts onto websites
+    - steal cookies, redirect to phishing sites, and more
+    - 2018, the Magecart group used XSS attacks to compromise thousands of websites by injecting malicious scripts into e-commerce platforms, stealing payment card details
+
+- Cross-Site Request Forgery (CSRF) Exploits:
+    - Act maliciously on an authenticated users behalf
+    - 2013, the Yahoo Mail CSRF vulnerability allowed attackers to forge requests on behalf of authenticated users, enabling them to send emails
+
+- Remote Code Execution (RCE) Exploits:
+    - execute arbitrary code on another machine
+    - 2017, the WannaCry ransomware exploited a vulnerability in the Windows SMB protocol (EternalBlue), encrypting files and demanding ransom payments from affected users.
+
+- Denial of Service (DoS) and Distributed Denial of Service (DDoS) Exploits:
+    - overload a service with a massive amount of accesses
+    - 2016, the Mirai botnet launched a series of massive DDoS attacks disrupting internet services for millions of users by overwhelming DNS servers with a flood of malicious traffic.
+""")
 
 
 with tab3:
@@ -358,20 +387,3 @@ with tab4:
                 'subprocess.check_call([sys.executable, "-m", "pip", "install",  "-q", "PyMsgBox"])',
                 import pymsgbox,
                 'pymsgbox.alert("Congratulation", "You executed random Code")']""", language="yaml")
-
-with tab5:
-     st.write(""" 
-              Maby next/Separate Chapter? \n
-              promised multi-stage-attack details -> \n
-              look deeper into the case of typosquatting -> explain the case \n
-                       """)
-
-with tab6:
-     st.write(""" 
-              -> deeper into type of attacks at the end of the session for now: \n
-              most common type of attack with success and recent development more of them (check source) \n
-              multi-stage-attack -> multi step approach mainly looking for information trying to get into the system by a low level vulnerable entry point
-              to maintain and widen acces to the internal system gaining acces to privileges in the system to get acces to data they can use for profit
-              again in detail later on the single steps and how to counter them individually \n
-              -> shows attackers leverages many vulnerabilities -> goal is to know how to minimize entrypoints or wholes thet can be used by others \n
-                """)
