@@ -153,7 +153,7 @@ with tab4:
         st.code(code_text)
         
         # When the user submits the script name, run the shell script
-        if st.button('Run', key="roman_ace_button"):
+        if st.button('Run the Flask app', key="roman_ace_button"):
             run_py_script("yaml_loader_ace.py")
 
     with col2:
