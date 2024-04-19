@@ -22,7 +22,7 @@ with tab1:
     with col2:
         st.write("""
                 ... and know the field characteristics:
-                🧬 technology constantly evolvs (and with it exploits and security)
+                🧬 technology constantly evolves (and with it exploits and security)
                 🎯 attack possibilities are endless everything is a target
                 ... so best way to stay safe?
                 educate and stay informed ℹ️
