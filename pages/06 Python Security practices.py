@@ -36,8 +36,6 @@ with tab0:
 with tab1:
    if "pylint_on" not in st.session_state:
       st.session_state["pylint_on"] = False
-   if "radon_on" not in st.session_state:
-      st.session_state["radon_on"] = False
    if "safety_on" not in st.session_state:
       st.session_state["safety_on"] = False
    if "github_action" not in st.session_state:
@@ -70,9 +68,6 @@ with tab1:
    If we Code for ourself we still want to create the best code we can. 
 
    Advantages for Code scanners even for your self:
-   - They raise the general coding hygiene, which is all the more important in a lax language like python.
-   - Remind you of your favorite task: Code documentation
-   - They help us uphold certain coding guidelines which can help make our code easier to understand. Even if the only person reading it is ourselves in 6 months! 
    - Reduce Code smells
    - Makes it easier to have a basic overview over dependencies and known vulnerabilities
 
@@ -112,30 +107,7 @@ with tab1:
    Your code has been rated at 0.00/10""", language="bash")
 
    st.markdown("""
-   A different specialization got more into the complexity of your code. They warn you once your modules and classes reach a certain complexity threshold. This can be defined by different measures, like lines of code in a file/class/function or the depth of your loops and if-clauses. Examples are:
-   - McCabe
-   - Radon 
-   """)
-
-   st.button("Activate Radon example", on_click=switch_click, args=["radon_on"])
-   if st.session_state["radon_on"]:
-      st.code("""
-   radon cc -a code_scanners_examples/bad_complexity.py
-
-   code_scanners_examples/bad_complexity.py
-      F 43:0 very_high_complexity_function - C
-      M 8:4 HighComplexityClass.high_complexity_method - B
-      M 24:4 AnotherHighComplexityClass.another_high_complexity_method - B
-      C 3:0 HighComplexityClass - B
-      C 20:0 AnotherHighComplexityClass - B
-      F 36:0 moderate_complexity_function - A
-      M 4:4 HighComplexityClass.__init__ - A
-      M 21:4 AnotherHighComplexityClass.__init__ - A
-
-   8 blocks (classes, functions, methods) analyzed.
-   Average complexity: B (5.75)""", language="bash")
-   st.markdown("""
-   Other Code Scanners also search for known vulnerabilities in your dependencies and other security risks. Even in a project thats only for yourself, if there is some kind of network connection involved, you want to be as secure as possible. Known security scanners are: 
+   Other Code Scanners also search for known vulnerabilities in your dependencies and other security risks. Examples are are: 
    - Safety => do example
    - Bandit
    """)
