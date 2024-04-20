@@ -25,12 +25,11 @@ def brute_force_random():
 start_brute_force = time.time()
 cracked_password = brute_force_random()
 end_brute_force  = time.time()
-print(cracked_password)
-print(end_brute_force - start_brute_force)     
+print(f"""An ordinary brute force attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds.""")
+    
 
 
 # 2. Use a timing attack
-
 def timimng_attack():
     pw_candidate = ["0","0","0","0"]
     check_time = 0.052
@@ -51,8 +50,8 @@ def timimng_attack():
 start_brute_force = time.time()
 cracked_password = timimng_attack()
 end_brute_force  = time.time()
-print(cracked_password)
-print(end_brute_force - start_brute_force) 
+print(f"""The timing attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds.""")
+
 
 # 3. Use a password list
 with open('10k-most-common.txt', 'r') as file:
@@ -69,5 +68,5 @@ def brute_force_list():
 start_brute_force = time.time()
 cracked_password = brute_force_list()
 end_brute_force  = time.time()
-print(cracked_password)
-print(end_brute_force - start_brute_force) 
+print(f"""Brute force attack using 10k-most-common.txt list on common passwords identified {cracked_password} 
+      as the real password in {end_brute_force - start_brute_force} seconds.""")
