@@ -2,7 +2,10 @@ import streamlit as st
 import subprocess
 from streamlit_ace import st_ace
 
-tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["vulnerabilities", "exploits", "path traversal", "code injection", "typosquatting", "attacking"])
+st.set_page_config(
+    layout="wide",
+)
+tab1, tab3, tab4  = st.tabs(["vulnerabilities & exploits", "path traversal", "remote code execution"])
 # taken from edx:
 #A vulnerability is a flaw in a system's design,
 #implementation or operation,
@@ -28,17 +31,37 @@ with tab1:
 #visualisation breakage in thinking process, and breackage in coding process (system design vs implementation)
 #continue exploit -> search and using breakacge in thinking
 #what are vulnerabilities vs bugs 
+    st.markdown(
+"""
+## Exploits
+examples:
 
-with tab2:
-        st.write("""
-             what are exploits 
-             3. Python specific: \n
-             What are the threats and what can I do?
-             - list of threats to adress
-             1. path traversal
-             2. code injection
-             ...
-             - how can you go about it """)
+- SQL Injection Exploits:
+    - badly sanitized input for queries
+    - 2014, the Heartbleed vulnerability in OpenSSL allowed attackers to exploit a flaw in the implementation of the TLS protocol, leading to the exposure of sensitive information, including private keys, usernames, and passwords.
+    - In Python: CVE-2022-34265, django had two functions (trunc and extract) that had this
+""")
+    st.image("./pages/scripts/assets/SQL_injection.png")
+    st.markdown("""
+- Buffer Overflow Exploits:
+    - often caused by vulnerability in input validation
+    - uses large input size to exceed memory and access areas beyond the buffer
+    - 2003, the SQL Slammer worm exploited a buffer overflow vulnerability in Microsoft SQL Server to spread rapidly across the internet
+    - In Python: CVE-2021-3177, the c-code below python could be reached and attacked with a buffer overflow attack
+
+- Denial of Service (DoS) and Distributed Denial of Service (DDoS) Exploits:
+    - overload a service with a massive amount of accesses
+    - 2016, the Mirai botnet launched a series of massive DDoS attacks disrupting internet services for millions of users by overwhelming DNS servers with a flood of malicious traffic.
+    - In Python: CVE-2021-3737, a HTTP-client could be sent into a infinite loop
+    
+- Remote Code Execution (RCE) Exploits:
+    - execute arbitrary code on another machine
+    - 2017, the WannaCry ransomware exploited a vulnerability in the Windows SMB protocol (EternalBlue), encrypting files and demanding ransom payments from affected users.
+
+- Path traversal or ../ 
+    - are a type of web security vulnerability that allows an attacker to access files or directories outside of the web server's root directory
+    - 2017, Equifax exposed the personal information of approximately 147 million people. The breach was attributed to a vulnerability in Apache Struts
+    """)
 
 
 with tab3:
@@ -75,13 +98,10 @@ with tab3:
                 if not line:
                     continue
                 st.write(line.strip())
-    
-        script_name = st.text_input('Enter the name of the python script:')
-    
         
         # When the user submits the script name, run the shell script
-        if st.button('Run'):
-            run_py_script(script_name)
+        if st.button('Run the gradio app'):
+            run_py_script("gradio_app.py")
 
     with col2:
         
@@ -132,13 +152,10 @@ with tab4:
             config_data = load_config('totally_safe_file.yaml')
             start_server(config_data)"""
         st.code(code_text)
-    
-        script_name = st.text_input('Enter the name of the python script:', key="roman_ace")
-    
         
         # When the user submits the script name, run the shell script
-        if st.button('Run', key="roman_ace_button"):
-            run_py_script(script_name)
+        if st.button('Run the Flask app', key="roman_ace_button"):
+            run_py_script("yaml_loader_ace.py")
 
     with col2:
         hide_yaml = st.checkbox("Hide yaml Content")
@@ -359,20 +376,3 @@ with tab4:
                 'subprocess.check_call([sys.executable, "-m", "pip", "install",  "-q", "PyMsgBox"])',
                 import pymsgbox,
                 'pymsgbox.alert("Congratulation", "You executed random Code")']""", language="yaml")
-
-with tab5:
-     st.write(""" 
-              Maby next/Separate Chapter? \n
-              promised multi-stage-attack details -> \n
-              look deeper into the case of typosquatting -> explain the case \n
-                       """)
-
-with tab6:
-     st.write(""" 
-              -> deeper into type of attacks at the end of the session for now: \n
-              most common type of attack with success and recent development more of them (check source) \n
-              multi-stage-attack -> multi step approach mainly looking for information trying to get into the system by a low level vulnerable entry point
-              to maintain and widen acces to the internal system gaining acces to privileges in the system to get acces to data they can use for profit
-              again in detail later on the single steps and how to counter them individually \n
-              -> shows attackers leverages many vulnerabilities -> goal is to know how to minimize entrypoints or wholes thet can be used by others \n
-                """)
