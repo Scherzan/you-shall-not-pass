@@ -1,273 +1,222 @@
 import streamlit as st
+import subprocess
 from streamlit_ace import st_ace
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Basics Cyber Security","IT security principles", "deep dive passwords", "deep dive cracking passwords", "summing up dos and don'ts"])
+tab1, tab2, tab3, tab4 = st.tabs(["Cyber Security","IT Security", "Passwords", "Checklist Password Hygene"])
+
+# schema to follow:
+#1. How is it supposed to work?  
+#2. What can go wrong?
+#3. how to we mitigate risk of it going wrong?
+
+# we start with reviewing the basics to build on
+# Unfortunately security starts with the our flaws. We all share common habits, that are leveraged to trick us
+# and probably the hardest part is keep reminding ourselves on this.  
+# We all adobt common cyber security tools and hope they do a decent job to protect us
+# and then we code away typing pip install package
 
 with tab1:
-    st.subheader("Recap: Basic Cyber-Security Advice")
+    st.subheader("Hacking Humans")
     # https://www.security.org/digital-safety/cyber-security-tips/#:~:text=Don't%20click%20on%20unfamiliar,Fi%20networks%20without%20a%20VPN.
     # integrate at some point: Personally Identifiable Information phishing
     # quelle basics it security verhalten: https://www.bsi.bund.de/EN/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/cyber-sicherheitsempfehlungen_node.html
     col1, col2 = st.columns(2)
-
     with col1:
-        st.write("""
-                 
+        st.image("./pages/scripts/assets/how_hacking_works.png")
+    
+    with col2:
+        st.write("""                 
         🔃 update your software \n
         🔐 practice password hygiene \n
         📱 when possible add 2FA \n 
         😷 use Antivirus Software \n
         🧱  keep active Firewall \n
         """)
-    with col2:
-        st.write("""
-                ... and know the field characteristics:
-                🧬 technology constantly evolvs (and with it exploits and security)
-                🎯 attack possibilities are endless everything is a target
-                ... so best way to stay safe?
-                educate and stay informed ℹ️
-                 """)
 
-with tab2: # https://www.explainxkcd.com/wiki/index.php/2176:_How_Hacking_Works # https://www.explainxkcd.com/wiki/index.php/792:_Password_Reuse
-    # a lot not all at once -> overwhelming maby do nothing most of you do this already to some extend
-    # understand principles guide focus on aspects relevant to you and your work 
-    # key point here go through theory (understadn the field and the way to interact with it)
-    st.write("What do we want to establish? IT-Security ")
+    st.code("pip install amtplotlib # installing matplotlib")
+
+    with st.popover("Enter"):
+        st.image("./pages/scripts/assets/typo_squatting.png")
+        
+        
+
+# another one maby less familiar basic concept cia triad but we wil act the same
+# know confidentiality is important -> for those who don't know 
+# conf = sensitive information is accessed only by authorized individuals
+# integrity = accuracy and consistency of data across lifecycle be sure no one unauthorized changed it
+# availability = you have acces to your information when you need to
+# its clear these are important -> but then might push something to git -< and ups my token is still in there
+# who hasend hardcoded copy pasted access tokens into their code base before -> out of conviniece.
+
+with tab2: 
+    st.subheader("Personal Information and Humans.")
     col1, col2 = st.columns(2)
 
     with col1:
+        col_space_left1, col_content1, col_space_right1 = st.columns((3, 8, 2))
+        with col_content1:
+            if st.button("Confidentiality"):
+                with col2:
+                    st.image("./pages/scripts/assets/git_leackage.png")
+        col_space_left2, col_content2, col_space_right2 = st.columns((3, 4, 3))
+        with col_content2:
+            st.write("CIA-Triad")
         cola, colb = st.columns(2)
         with cola:
-            st.image("./pages/scripts/assets/CIA-triad.png")
+            if st.button("Integrity"):
+                with col2:
+                    st.write("hashes news")                
         with colb:
-            st.button("Confidentiality")
-            st.button("Integrity")
-            st.button("Availability")
-    with col2:
-        st.write("display news related to the topics")
+            if st.button("Availability"):
+                with col2:
+                    st.write("permission denied")
 
-# inofficial -> what is the field about -> conclude out of official labels CIA traid ? make link = understand
-# official principles to follow = basic thing to follow
-# There are three basic principles of information security:
 
-#Confidentiality
-#Integrity
-#Availability
-#Together, these principles are known as the CIA Triad. Every infosec program must follow these principles for maximum effectiveness.
-#common model that forms the basis for the development of security systems (information security)
+# Now we know we are the flaws, what to do? -> Get started with a simple Secure Software Development Lifecycle
+# use example of password authentification even though much is moving direction of 2FA
+# infact starting this year pypi now requires 2fa for new users (and top 1% package accounts) -> so things evolve in a good direction
+
+# Let's say we have an application, that uses personal information: -> application to collect and prioritize social media notifications
+# you will need to establish user accounts for each new user:
+# requirement: -> users need accounts to use the app with their information + security need to make sure only see their own account -> pw authentification 
+# design -> login to account + need to authenticate person (registration (registration phase) + authentification phase)
+# development ()
 # 
-#Confidentiality ensures that sensitive information is accessed only by authorized individuals.
-#Integrity, the focus of our project, involves maintaining the accuracy and consistency of data across its lifecycle, ensuring that it is not altered or tampered with by unauthorized parties.
-#Availability ensures that information and resources are accessible to authorized users when needed.
-#thoughts: C -> don't upload your private keys -> schlagzeile einblenden
-#I -> use lockfiles and hashes -> go into deeper later
-#A -> it is to everyone all the time = open source
-
-
-#What does it mean to know abou securtity?
-#Go through one very well known security measure -> password for authentification
-#authentification = verify user allowed access -> come across everytime you use a system
-#-> maby come across in coding when you build your own apps or function
-#(Part of integrity -> passwords should not be given to others )
-#
-#1. How is it supposed to work?  heaven
-#2. What can go wrong? hell
-#3. how to we mitigate risk of it going wrong? footsteps
-
-
-#1.
-#password as security measure -> implement this if yu code an app with login:
-#- registration phase
-#- picks a password, -> sequence of characters
-#- register in system (record the password) i.e. database
-#- authentication pahse (on login)
-#- user name and password
-#system looks up the user name
-#in the password database is it a macth?
-#-> match login sucessfull use system
-#-> not matched asked to repeat process -> zeichnung
-
 
 with tab3:
-    st.write("What does it mean: to know about securtity practices?")
-    st.write("Simple Example: Password Authentification and Security")
-    st.image("./pages/scripts/assets/pw_process.png")
-    #st.write("How to crack a password")
-    #st.write(""" brute force vs logic (types of exploits from course) 
-    #             -> look at one closer: passwords -> why need to be long -> \n
-    #         ...\n
-    #
-    #it security course -> reference where you have the info from: \n
-    #
-    #- crack a password -> showcase how long it takes \n""") # use content of info sec course
-#
-# xz social engineering -> multi layer attack..
+    st.header("Applying a Minimal Secure Software Development Process")
+    with st.expander("Design"):
+        st.image("./pages/scripts/assets/pw_process.png")
+    with st.expander("Implementation"):
+        show_code = st.checkbox("Show password_app.py content")
 
+        if show_code:
+            
+            code_to_pw = """
+            import time
+            import tkinter
+            from tkinter import messagebox
+            
+            retreived_real_password = "12345"
+            
+            def check_password(password): # Don't change it
+                if len(password) != len(retreived_real_password):
+                    return False
+                for x, y in zip(password, retreived_real_password):
+                    time.sleep(0.1) # Simulates the wait time of the safe's mechanism
+                    if int(x) != int(y):
+                        return False
+                return True
+            
+            window = tkinter.Tk()
+            window.title("Password Authentification")
+            window.geometry("340x440")
+            window.configure(bg="#333333")
+            
+            def login():
+            
+                if check_password(password_entry.get()):
+                    messagebox.showinfo(title="Login Success", message="You entered the correct password.")
+                else:
+                    messagebox.showerror(title="Error", message="Invalid password.")
+            
+            frame = tkinter.Frame(bg='#333333')
+            ...
+            """
+            st.code(code_to_pw)
 
-#1.5. -> naively solve this problem in python:
-#
-#we know password -> some charcters -> need to store them and then we need to check if incoming characters is equal to the basic
-#
-#write simple function, which compares two arrays and returns true/false for if equal or not
-#
-#1. This example (taken from it security course on edx)
-#
-#- make sure the array lengths are equal.
-#- if not exist 
-#- if yes continue and
-#   - iterate over them
-#and check if all of their element are equal.
-#- if one check fails return false
-#- else return true
-#
-#Lets say for a 20 characters long password.
-#Here's the real password.
-#-> check_password function gib ein false passwords _> gibt falsch aus und wnen richtige gibt es true aus
-#Anyone wants to share though on how this is flawed?
+        def run_py_script(script_name):
 
-#-> brute force -> trying each combination:
-#-> write function for it
-#10²⁰ possible combinations over a trillion.
-#
-#This solution is in fact flawed
-#in a very subtle way.
-#
-#Solution:
-#What if we try guessing it
-#and measure how long it took the system
-#to tell us that it's wrong?
-#
-#We look at this function:
-#-> write a crack_password function:
-#-> zeige deine solution ->
-#
-#erkläre was timing attack ist und dann zeige deine fixed solution
-#-> many examples online how to write a proper password check 
-#continue with 2.
-
-# after demo
-#let's consider some basic attacks:
-#- steal passwords (from target directly with keylogger (hardware/Software), when in transit, or from database of service)
-#- guess passwords
-
-with tab4:
-    col1, col2 = st.columns(2)
-    with col1:
-        code_password = """
-        real_password = "2687"
-        def check_password(password):
-        if len(password) != len(real_password):
-            return False
-        for x, y in zip(password, real_password):
-            time.sleep(0.1) # Simulates the wait time of the response mechanism
-            if int(x) != int(y):
-                return False
-        return True """
+             command = ["python", '-u', script_name]
+             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+             while process.poll() is None:
+                line = process.stdout.readline()
+                if not line:
+                    continue
+                st.write(line.strip())
     
-        content = st_ace(language='python', theme="terminal", wrap=True, value=code_password)
-        if content:
-            #st.subheader('Content')
-            st.write(content) # find method to evaluate with pyscript!? -> go through alternatives in select box one by one
-            # after evaluation there is a button clear and then this content is displayed
+        # When the user submits the script name, run the shell script
+        if st.button('Run password_app.py'):
+            run_py_script("password_app.py")
 
-        if st.button('Continue'):
-            with col1:
-                st.image("./pages/scripts/assets/pw_process_attack.png")
+    with st.expander("Verification"):
+        show_code = st.checkbox("Show crack_password.py content")
 
-
-    with col2:
-        option = st.selectbox("Code snippets:", ('demo', 'brute force', 'attack faster', 'alternative implementation'), placeholder=" ")
-        if option == "demo":
-            code_snippet = """
-                           import time
-                           pw_candidate = "3987" # "2687"
-                           start = time.time()
-                           print(check_password(pw_candidate))
-                           time_taken = time.time() - start
-                           print(time_taken) """
-            st.code(code_snippet)
-        elif option == "brute force":
-            code_snippet = """
-                           import time
-                           def crack_password_brute_force():
-                               possible_combinations = int("".join(np.repeat(str(9), len(real_password)).tolist()))
-                               print(possible_combinations)
-                               for pw_candidate in np.arange(0, possible_combinations, dtype=int).tolist():
-                                   if not check_password(str(pw_candidate)):
-                                       continue
-                                   else:
-                                       return str(pw_candidate)
-
-                           start = time.time()
-                           print(crack_password_brute_force())
-                           print(f"It took {time.time() - start} seconds and 2687 trials to crack the password")"""
+        if show_code:
             
-            st.code(code_snippet)
+            code_to_pw = """
+            ...
+            # 1. Brute force:
+            def brute_force_random():
+                possible_combinations = int("".join(np.repeat(str(9), len(real_password)).tolist()))
+                for pw_candidate in np.arange(0, possible_combinations, dtype=int).tolist():
+                    if not check_password(str(pw_candidate)):
+                        continue
+                    else:
+                        return str(pw_candidate)
 
-        elif option == "attack faster":
-            code_snippet = """
-                           import time
-                           def crack_password():
-                               pw_candidate = ["0", "0", "0", "0"]
-                               check_time = 0.12
-                               for position_dig in range(len(pw_candidate)):
-                                   for dig in np.arange(0, 10, dtype=int).tolist():
-                                       pw_candidate[position_dig] = str(dig)
-                                       start = time.time()
-                                       check_password("".join(pw_candidate))
-                                       time_taken = time.time() - start
-                                       print(time_taken)
-                           
-                                       if time_taken > check_time:
-                                           check_time = check_time + 0.1
-                                           break
-                                                          
-                               return "".join(pw_candidate) 
-
-                           start = time.time()
-                           print(crack_password())
-                           print(f"It took {time.time() - start} seconds and 23 trials to crack the password")"""
+            # 2. Timing Attack:
+            def timimng_attack():
+                pw_candidate = ["0","0","0","0"]
+                check_time = 0.052
+                for position_dig in range(4):
+                    for dig in np.arange(0, 10, dtype=int).tolist():
+                        pw_candidate[position_dig] = str(dig)
             
-            st.code(code_snippet)
-# continuation 3 footsteps):
-#password hygene:
-#- 
-#- use different passwords in each account 
-#- long and unique (not on any password list)
-#tools to help:
-#- check password leakage
-#- password manager to store passwords (synchronized across devices)
-#- frequently used -> easy to remember and hard to guess
-#as an application designer_
-#- check cookiecutter examples of implementations (using hashes, cryptographie ...)
-with tab5:
+                        start = time.time()
+                        if check_password("".join(pw_candidate)):
+                            return "".join(pw_candidate) 
+                        time_taken = time.time() - start
+            
+                        if time_taken > check_time:
+                            check_time = check_time + 0.05
+                            break
+                            
+
+            # 3. Use a password list
+            with open('10k-most-common.txt', 'r') as file:
+                data = file.read()
+            data_into_list = data.split("\n") 
+            
+            def brute_force_list():
+                for pw_candidate in data_into_list:
+                    if not check_password(pw_candidate):
+                        continue
+                    else:
+                        return str(pw_candidate)
+                    
+            """
+            st.code(code_to_pw)
+
+        def run_py_script(script_name):
+
+             command = ["python", '-u', script_name]
+             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+             while process.poll() is None:
+                line = process.stdout.readline()
+                if not line:
+                    continue
+                st.write(line.strip())
+    
+        # When the user submits the script name, run the shell script
+        if st.button('Run crack_password.py'):
+            run_py_script("crack_password.py")        
+ 
+with tab4:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("password hygiene")
         default = st.checkbox('change default passwords')
         different_pw = st.checkbox('use different passwords for each account')
-        if different_pw:
-            st.write("(at least the important ones)")
         long_and_unique = st.checkbox('create long and unique passwords')
         if long_and_unique:
             st.write("not on any password list")
     
         st.subheader("tools and tricks to help")
-        check_pw = st.checkbox('check password leakage list: https://haveibeenpwned.com/')
+        check_pw = st.checkbox('check password leakage lists and https://haveibeenpwned.com/')
         # make a poll?
         pw_manager = st.checkbox('let a password manager store passwords')
-        frequent_use = st.checkbox('with frequently used accounts make password easy to remember and hard to guess')
+        frequent_use = st.checkbox('make password easy to remember and hard to guess (combine 4 random words)')
     with col2:
-        if frequent_use:
-            st.image("./pages/scripts/assets/password_strength.png")    
+        st.image("./pages/scripts/assets/password_strength.png")    
     
-    #st.write(""" dos and don'ts
-    #behaviours expressed in emojis (serious ones)
-    #- exercise caution (don't click on suspicious things/ downloads/pii entering) \n
-    #                      - email entering
-    #         - check get hacked?
-    #- browse with care (browser settings, https websites (an in the middle attack: don't worry about someone getting in between us and PyPI) \n
-    #- check get hacked 
-    #... many more \n  
-    #""")
-# I got hacked:

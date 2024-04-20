@@ -43,7 +43,8 @@ with tab2:
 
 with tab3:
     col1, col2 = st.columns(2)
-
+    # insert notification oder bild von cve?
+    
     with col1:
         st.write("""
          CVE-2023-51449\n
