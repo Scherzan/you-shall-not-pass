@@ -15,7 +15,7 @@ with col_a:
     🏷️: Antonia Scherz \n
     🏠: Berlin \n
     🏢: PD - Berater der öffentlichen Hand \n
-    🧭: Senior Specialist/ML Engineer \n
+    🧭: ML Engineer \n
     """)
     #st.image("images/anto_scherz.jpg")
     #st.write("LinekdIn: [https://www.linkedin.com/in/antonia-scherz-7b4740178](%s)" % "https://www.linkedin.com/in/antonia-scherz-7b4740178")
