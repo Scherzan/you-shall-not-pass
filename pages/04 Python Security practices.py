@@ -6,36 +6,12 @@ st.set_page_config(
 )
 
 
-tab0, tab1, tab2, tab3, tab4  = st.tabs(["coding practices", "code scan", "package management", "pypi and open source", "stay informed"])
+tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in a GitHub repo.", "How to check packages before installing?", "Is dependency management important?", "stay informed"])
 
 
+# Einleitung nach Coding riskis > What to to to stay secure?
+# Prepared a pseudo FAQ
 with tab0:
-    st.write("""
-             Applying software basics to coding ? Because it is softwarte. \n
-
-             1. update your software (manage dependencies)
-             2. use antivirus software (scan your code)
-             3. new* stay informed (design smart notification system)
-             additions when publishing, \n
-             additions web apps (go into less deep) \n
-        """)
-    
-#pip = default -manual management
-#python -> managed by Pyenv
-#Conda package manager in Anaconda can easily manage Python environments and dependencies
-#many third party packages that can be used as dependencies. 
-#there is not one obvious way to specify dependencies
-
-# how to manage python dependencies -> python version and packages?
-# code should always work (can be run without errors) -> coding environment
-# what python version
-# which packages (also the hidden ones)
-
-
-
-   
-
-with tab1:
    if "pylint_on" not in st.session_state:
       st.session_state["pylint_on"] = False
    if "safety_on" not in st.session_state:
@@ -54,34 +30,18 @@ with tab1:
 
    st.markdown(
    """
-   ### Why and for what should we scan our code?
-   - Enhance Code Quality
-   - automatic Vulnerability Detection
-   - Dependency Management
-   - Compliance and Licensing
+   ### Good starting points include:
+   - Enhance code quality with linters
+   - Detect vulnerabilities with static code scanners
 
-   It is always important to know what your goal is during scanning. There are three we want to differentiate: 
-   - For ourself
-   - To publish it safely to others (like via github) 
-   - To publish it to many others on distribution networks like PyPi 
-
-   #### Scan your own Code for your own sake
-
-   If we Code for ourself we still want to create the best code we can. 
-
-   Advantages for Code scanners even for your self:
-   - Reduce Code smells
-   - Makes it easier to have a basic overview over dependencies and known vulnerabilities
-
-   Scanners that specialize in increasing your general code quality are also known as linters.
-   There are many linters to choose from:
+   #### There are many linters to choose from:
    - Pylint 
    - Flake8
    - pycodestyle
    - pylama (actually combines many linters and other tools)
-   """)
+   """) # Auf security aspect von linter eingehen warum hilfreich für code security
+   # am besten anhand des code Beispiels
       
-
    st.button("Activate Pylint example", on_click=switch_click, args=["pylint_on"])
 
    if st.session_state["pylint_on"]:
@@ -109,9 +69,12 @@ with tab1:
    Your code has been rated at 0.00/10""", language="bash")
 
    st.markdown("""
-   Other Code Scanners search for known vulnerabilities in your dependencies and other security risks. Examples are are: 
-   - Safety => do example
+   #### Static Code Scanners that search for known vulnerabilities and other risks:
+   - Safety (demo below)
    - Bandit
+   - SnykCode
+   - ...
+   Find a comprehensive list here: https://owasp.org/www-community/Source_Code_Analysis_Tools
    """)
 
    st.button("Activate Safety example", on_click=switch_click, args=["safety_on"])
@@ -469,16 +432,18 @@ with tab1:
    +==============================================================================================================================================================================================================+""")
 
 
+with tab1:
    st.markdown("""
-   #### Publishing Code
-
-   If you publish your code, most likely via Github or Lab, you should automate your chosen scanners. 
-   - don't have to do many scanners one by one but instead have an automated pipeline
-   - can prohibit merges unless certain quality and safety criteria are met. 
-   - have an indicator for others that your code is actually well done
-   - one time investment, that can be the baseline for your knowledge about CI/CD
+   ### Using Git repositories:
+   - automate chosen scanners and use an automated pipeline
+   - configure merges requirements to meet security standards 
+   - have an indicator for others that your code is actually well done (add example)
+   - check ressources on CI/CD
+   - dig deep into dependency management -> reference Anto
+   - Compliance and Licensing -> mention tools for license checking?
    """)
 
+   st.markdown("#### Github action example to follow:")
    st.button("show Github actions example", on_click=switch_click, args=["github_action"])
    if st.session_state["github_action"]:
       st.code("""
@@ -544,201 +509,112 @@ with tab1:
    """, language="bash")
 
    st.markdown("""
-   #### Publish your Code on PyPi
-
-   PyPi has a really low requirement to publish, which is great to have as many contributors as possible. But this makes it easier for bad actors, active ones or not.
-
-   We are all good, moral people
-
-   => We would only publish packages that are as safe, clean and reliable as possible
-
-   => We need to hold ourselves to a very high standard and enforce it for ourselves before publishing packages for others
-
+   ### How can I publish my package on PyPi?
+   - automate chosen scanners 
+   - use automated pipeline
+   - PyPi Account since beginning of the year with 2FA  
+   - Check workflow here: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+   - generally there are low requirement to publish on PyPi (It makes it easy for us and for bad actors
    """)
-       
 
-with tab2: # integrate"lockfiles", "hashes", "dependency trees"
-   st.subheader("Intro Supply Chain Security")
+with tab2:
+   st.markdown("### I googeled how to ... and the solution suggests to pip install some package.")
    col1, col2 = st.columns(2)
    with col1:
-      criteria = ['including python','support package types','necessary packages only', 
-                  "get dep tree", "uninstall packages", "lockfile",
-                  "handling dep conflickst", "Installing from where"]
-      conda_traits = ["yes as package", "many", "no", 
-                      "two commands", "package + some additional ones","possible conda-lock",
-                       "automated installation diff version", "Anaconda"]
-      poetry_traits = ["no, seperate install needed", "Python only", "yes", 
-                       "one command", "package + all additional ones", "automated",
-                        "error message need to control yourself", "PyPi"]
-      df_compare= pd.DataFrame.from_records({" ": criteria, "conda": conda_traits, "poetry(+pip)": poetry_traits})
-      st.table(df_compare)
-      # can combine them -> quite some articels on that topic.
-      st.image("./pages/scripts/assets/env.png")
+      caution = st.checkbox("Be cautious, visit the page and check for a git repository")
+      if caution:
+          auditing = st.checkbox("Check for high risk python expressions: subprocess.run , exec and eval functions")
+          if auditing:
+              init_check = st.checkbox("Check common places for malicious code in __init__ file or setup.py")
+              if init_check:
+                  check_for_http = st.checkbox("Check for http requests exfiltrating system information")
+                  with col2:
+                     if check_for_http:
+                        st.image("./pages/assets/git_search.png")
 
-      # pypi vs conda forge about package repositories
-      criteria = ['Open source Python libraries','Other open source tools','Windows/Linux/macOS packages']
-      conda_forge_traits = ["many", "many", "almost always"]
-      pypi_traits = ["almost all", "None", "up to maintainer (usually yes)"]
-      df_compare_pck_repos = pd.DataFrame.from_records({" ": criteria, "conda-forge": conda_forge_traits, "PyPi": pypi_traits})
-      st.table(df_compare_pck_repos)
-      # missing text
+   st.markdown("### I am still not confident or want more proof")
+   col1, col2 = st.columns(2)
+   with col1:   
+      check_vulnerability_db = st.checkbox("Check databse for reports on the package: i.e. snyk database")
+      if check_vulnerability_db:
+          st.write("https://security.snyk.io/vuln/pip")
+          with col2:
+            st.image("./pages/assets/search_snyk.png")
+          automated_pypi_check = st.checkbox("Identify malicious PyPI packages with guardDog")
+          if automated_pypi_check:
+             st.write("guardDog: https://github.com/DataDog/guarddog")
+             download_check = st.checkbox("Download latest package version from pypi and run code checks on code base.")
+             if download_check:
+                st.write("Local code scan i.e. with Safety")
 
-# bsp criteria für tabelle -> conda vs poetry
-# including python? -> yes as package vs no
-# support package types -> many vs only python
-# necessary packages only -> no vs yes
-# get dep tree -> two commands vs one command
-# uninstall packages -> package + some additional ones vs package + all additional ones
-# lockfile -> possible conda-lock vs automatically
-# handling dep conflickst automated installation diff version vs stop + error message (resolve yourself)
-# perfromance both have different issues
-
-# add pypi vs conda-forge
-
-
-#easy-to-read minimal configuration file
-
-# add to table: lockfile automation (poetry) Pip and Conda, by default, lack a lock feature
-# -> generating lockfiles via installed libraries like pip-tools and conda-lock possible
-# dependency conflicts (pip just installs with error messages, conda issues warning and describes which package is installed instead of other version)
-# poetry refuses to install -> need to find another option for one or the other.-> more control
-# uninstallation of packages: pip only uninstall package nothing else. Conda removes some packages not all dependencies. 
-# Poetry remove the package and all its dependencies list of dependencies clutter free.
-
-#Yes, Poetry is compatible with existing projects managed by Pip or Conda. 
-#Just initialize your code using Poetry's Poetry.toml format and run it 
-#to grab the library of packages and its dependencies, allowing for a seamless transition.
-
-
-   with col2:
-      # missing descriptions
-      lockfile = st.checkbox('lockfiles')
-      hashes = st.checkbox('hashes')
-      dep_tree = st.checkbox('dependency tree')
- # word on python updates -> important too.
+   st.markdown("### I want to try out risky packages.")
+   use_phylium = st.checkbox("Use sandbox environment. i.e. phylum CLI with poetry support")
+   if use_phylium:
+      st.write("Sanbox package installations: https://blog.phylum.io/sandboxing-package-installations-arms-developers-with-defense-against-open-source-attacks-and-unintended-consequences/")
+   
 
 with tab3:
-   st.write("organisation/podcast/nesletters/how to tackle information fatigue")
+   st.subheader("Yes, unless it is a one time application.")
+   dep_management = st.checkbox("Make sure you have repeatable and deterministic installations.") 
+   if dep_management:
+      lockfiles = st.checkbox("Lockfiles should contain dependencies and subdependencies with strict versions. pyproject.toml newest 'standard'.")
+      dep_trees = st.checkbox("Make sure lockfile includes full dependency tree with subdependencies. Poetry offers clean subdependency management")
+      
+   scan_dep = st.checkbox("Use tool like pip-audit to scan your dependency tree before going public")
+   #st.image("./pages/assets/pip-audit_pypi.png")
+   if scan_dep:
+      st.image("./pages/assets/pip_audit.png")
 
-# on security when publishing to pypi:
+   advanced = st.checkbox("Advanced using your own pypi repo locally (comapny level).")
+   if advanced:
+      hashes = st.checkbox("Check hashvalues before installing. -> Avoid confusion of local and pypi repo packages")
+   docker_option = st.checkbox("Consider package application into docker, if no active collaboration is ongoing.")
+
+
 with tab4:
-   st.write("maby integrated into tab4?")
-   st.write("""
-            Open source -> news on security front          
-            - pip security
-                     - verifikation
-                     - trusted authors
-            pypi: security update (check release): voluntary two factor authentication requirements. 2fa mandate for critical projects
-                     (top 1%)
-                     they hand out hardware keys
-                     4000 google titan security keys
-        """)
-    
-    
-   
-with tab5:
-   st.write("""         
-         for environment mangement lockfiles: 
-         A lockfile can contain dependency version information that is valid across multiple platforms and Python interpreter versions. 
-         Lockfiles are important because they allow for repeatable and deterministic installations. This is most beneficial for applications 
-         living at the end of the dependency chain. It can also be useful for internal development and testing of libraries so that 
-            other issues can be isolated and reproduced.
-         -> many recommendations for uploading to pypi and packaging -> not go into this
-         - go through Workflow tools assumption many of you use python for personal projects maby not yet into packaging and publishing tools but still upload code to github 
-         and collaborate across public repos
-         -> pipenv
-         -> poetry
-         -> pip-tools
-         -> conda: 
-            - conda can create sort of an environment file in the yaml format to distribute to others using also conda. Create it using: 
-               - conda list --explicit --export --md5 > environment.yml
-            - and then create a new environment with
-               - conda create -n <name> -f environment.yaml
-            - now you can share the yaml-file with everyone. If you only want to adapt to updates you need the following command:
-               - conda update --file environment.yml 
-            - you can alternatively actually use pip inside of conda and have access to many of pips features (although it can make it own problems)
-            - Condas biggest selling point is its large usage in scientific computing and AI. The big community with this focus uses conda and develops it with this use case in mind.
-         there are others: like hatch, pdm, rye.. not time to go into all. 
-            What we can do: Use lockfiles because version pins, 
-         this can f.e. mitigate squat attacks, avoids dependency confusion. 
-         
+   col1, col2 = st.columns(2)
+   with col1:
+      st.header("List of Tools:")
+      st.subheader("Software")
+      st.write("GuardDog: ")
+      st.write("Sanbox package installations: https://blog.phylum.io/sandboxing-package-installations-arms-developers-with-defense-against-open-source-attacks-and-unintended-consequences/")
+      st.subheader("Databases")
+      st.write("https://www.cve.org/ Official vulnerability Database (Search for Python)")
+      st.write("https://security.snyk.io/ Based on CVE database with extended information on Poc and Fixes")
+      st.subheader("Get involved:")
+      st.write("Get startet with ethical hacking: https://snyk.io/ethical-hacking-resources/")
+      st.write("Get startet Cyber Security:")
+      st.write("Bug Bounty Programs: ")
 
-            """)
-with tab6:
-   st.write(""" hashes
-            Hashes verify the file downloaded from PyPI is the same as the version uploaded to PyPI hash computed when uploaded 
-            verifies no manipulation/change 
+   with col2:
+      st.header("List of ressources:")
+      st.subheader("Organisations & Ressources")
+      st.write("https://cheatsheetseries.owasp.org/ Collection of specific application security topics")
+      st.write("https://www.python.org/dev/security/ Reporting Security Issues with PyPi")
+      st.write("https://pyfound.blogspot.com/2024/04/new-open-initiative-for-cybersecurity.html Python Software Foundation Open Source Security Efforts")   
+      st.subheader("Blogs")
+      st.write("The Python Package Index Blog: https://blog.pypi.org/ (Well curated news on PyPi specific issues)")
+      st.write("GitGuardian Blog: https://blog.gitguardian.com/")
+      st.write("Phylium Research Blog: https://blog.phylum.io/tag/research/ (Security Reasearch)")
+      st.write("Snyk Blog: https://snyk.io/blog/ (Variety of  Articels also on AI topcs i.e. Using Copilot)")
+      st.subheader("Podcasts")
+      st.write("The Real Python Podcast: https://realpython.com/podcasts/rpp/114/ (Remember to check shownotes.)")
+      st.write("Long list: https://blog.phylum.io/the-power-of-the-pod/")
+      st.subheader("Talks")
+      st.write(""" 
+               https://www.youtube.com/watch?v=i1QqhGsbX6Y \n
+               https://www.youtube.com/watch?v=VWWgkF-0cDQ
+               """)
 
-            """)  
+      # maybes: https://snyk.io/platform/git-repository-security/
+      # code checker: https://snyk.io/code-checker/
+      # code review cheat sheet: https://res.cloudinary.com/snyk/images/v1/wordpress-sync/Snyk-Secure-Code-Review-Cheat-Sheet/Snyk-Secure-Code-Review-Cheat-Sheet.pdf
+      # tutorial timing attacks python: https://sqreen.github.io/DevelopersSecurityBestPractices/timing-attack/python
 
-with tab7:
-   st.title(""" Dependency Trees""") 
-   st.markdown(""" Python is a highly interdependent language and we all use many packages without giving it much thought. 
-This builds a big pile of libraries that accumulate in even smaller scripts to the point that it gave birth to a whole landscape of package management systems like pip, poetry, conda and much more.
-Most of the times the dependencies will be displayed in a requirements file or as a list of actively installed packages.
-But this only gives an impression of either the surface or the final picture.
-You won't know why a package X is ACTUALLY needed in your code if you did not actively imported it.
-Dependency Trees are a way to display all the packages your code needs, along with their path into the environment.
 
-Lets say you have two known dependencies for package A und B, a DT might look like this
-- A
-   - C
-   - D
-      - E
-- B
-   - C
-
-This gives a much clearer overview which package is actively installed and required and which is only a dependent.
-
-And while these structures are essential for the package management systems itself, most Developers do not keep track of them.
-But with them we can now see in detail which package forces us to use a certain Version of another package.
-This becomes very important if we come across vulnerabilities and want to update to a newer version.
-Because now we know which higher-leveled package we might actually need to update in order to increase the version of a dependent package.
-               
-Since this is such a relevant functionality for package management systems, they can (as far as we are aware) all produce them with ease. 
-               
-Here is the command in poetry:
-""")
-# Verbally: with these structures conflict resolution is achieved by finding all requirements for a certain package an then trying to fulfill them all
-   st.code("""
-   poetry show --tree
-   """, 
-         language='bash')
-   st.write("And in conda it looks similar:")
-   st.code("""
-   conda list --tree
-   """, 
-         language='bash')
-   st.write("pip and also pip-tools need another package called pipdeptree:")
-   st.code("""
-   pip install pipdeptree
-   pipdeptree
-   """, 
-         language='bash')
-   st.write("pipenv makes it the easiest:")
-   st.code("""
-   pipenv graph
-   """, 
-         language='bash')
-   st.write("The resulting tree will always look the same and can be searched, even if most sophisticated security tools should do this for you, it never hurts to know where to look yourself if something needs to be done")
-
-with tab8:
-   st.write(""" 
-            where you are probably at: -> comparison of tools needed?
-
-            - alternative pip-tools -> like to work with pip??
-                     -> pip install -> installs into base _> need environments
-            -> ok create environment with venv (for Python 3) 
-                     python3 -m venv .venv
-                     -> activate it now use pip as before
-            -> problem? many packages _> make a list in requirements.txt (+ versions)
-                     -> use. python3 -m pip install -r requirements.txt
-                     and python3 -m pip freeze to get all packages you have installed -> others acn use it too
-                     -> updateing becomes very cumbersome -> example in a blog. This loop of dependency conflicts may potentially continue for a long time, and get incredibly tiresome very quickly…
-            (https://medium.com/packagr/using-pip-compile-to-manage-dependencies-in-your-python-packages-8451b21a949e)
-                     
-                     -> alternative: python -m pip install pip-tools
-                     but then not have alist of requirements - dynamically want to tupdate your packages?
-            
-            same procedure for poetry:    
-            """)    
+# still check out:
+#vulnerability notifications - interact with lockfiles
+# - notification on changes or new versions in dependencies (f.e. new vulnerability discovered)
+# - Tool PyUp, Dependabot (check on warehouse PyPI  automated pull request notifications)
+# - usefull because fast notification on compromised packages and speed up upgrade path - merge as soon as new vulnerability is out
+# - practices run CI  and dependency checks every time  a/this pull request is made no manual update like run pip compile necessary

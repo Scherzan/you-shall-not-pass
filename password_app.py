@@ -2,20 +2,21 @@ import time
 import tkinter
 from tkinter import messagebox
 
-retreived_real_password = "12345"
-
+RETREIVED_REAL_PASSWORD = "1234"
+            
 def check_password(password): 
-    if len(password) != len(retreived_real_password):
+    
+    if len(password) != len(RETREIVED_REAL_PASSWORD):
         return False
-    for x, y in zip(password, retreived_real_password):
-        time.sleep(0.1) # Simulates the wait time of the safe's mechanism
+    for x, y in zip(password, RETREIVED_REAL_PASSWORD):
+        time.sleep(0.1) # Simulates the wait time of a safe's mechanism
         if int(x) != int(y):
             return False
     return True
 
 window = tkinter.Tk()
 window.title("Password Authentification")
-window.geometry("340x440")
+window.geometry("640x440")
 window.configure(bg="#333333")
 
 def login():

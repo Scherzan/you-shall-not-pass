@@ -7,12 +7,13 @@ st.set_page_config(
     layout="wide",
 )
 
-# This talk is going to be about practices and tools you can use when coding mainly 
-# to make sure you implement basic security precautions right.
-# The talk will be more for you who got into python from other backgrounds than software development
-# and who started to use python more as the tool of choice for applications in your area of interest
-# If you got into python with a software dev background or you know all pypi and owasp security standards and cheat sheets by heart
-# you won't find anything new. Maby you will enjoy the cartoons?
+# This talk is going to be about practices and tools to use while coding mainly 
+# to showcase basic security precautions.
+# This talk is not design software engineers or security specialists 
+# and also not for those who are lucky to work in an environment with scrutinized secure coding system in place.
+# The talk will hopefully be enjoyable for you if you love to play around in python and you have come to the conclusion that
+# it might be too risky to continue copy pasting all stackoverflow answers directly into your temrinal. 
+
 
 # Implementing security often feels like a chore especially when we are ecited to see our ideas in action
 # Also technology evolves so quickly and usuall we know so little about what software and dependencies we are actually using,
