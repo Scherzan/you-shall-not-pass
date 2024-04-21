@@ -554,16 +554,30 @@ with tab2:
    
 
 with tab3:
-   st.subheader("Yes, unless it is a one time application.")
+   st.markdown("### Dependency management is key.")
    dep_management = st.checkbox("Make sure you have repeatable and deterministic installations.") 
    if dep_management:
-      lockfiles = st.checkbox("Lockfiles should contain dependencies and subdependencies with strict versions. pyproject.toml newest 'standard'.")
-      dep_trees = st.checkbox("Make sure lockfile includes full dependency tree with subdependencies. Poetry offers clean subdependency management")
+      lockfiles = st.checkbox("Use Lockfiles. (Pinned Package Vrsions, hashes, all dependencies.)", value=True)
+      requirements_file = st.checkbox("requirements.txt", value=True)
+      if requirements_file:
+         st.code("""
+                # strict dependencies
+                aiofiles==23.2.1\n
+                altair==5.3.0\n
+                annotated-types==0.6.0\n
+                anyio==4.3.0\n
+                astroid==3.1.0\n
+                attrs==23.2.0\n
+                \n
+                # loose dependencies
+                Authlib
+                blinker
+                cachetools""")
       
    scan_dep = st.checkbox("Use tool like pip-audit to scan your dependency tree before going public")
-   #st.image("./pages/assets/pip-audit_pypi.png")
    if scan_dep:
       st.image("./pages/assets/pip_audit.png")
+      st.image("./pages/assets/pip-audit_pypi.png")
 
    advanced = st.checkbox("Advanced using your own pypi repo locally (comapny level).")
    if advanced:

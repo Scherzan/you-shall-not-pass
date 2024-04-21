@@ -84,7 +84,7 @@ with tab3:
                 if len(password) != len(RETREIVED_REAL_PASSWORD):
                     return False
                 for x, y in zip(password, RETREIVED_REAL_PASSWORD):
-                    time.sleep(0.1) # Simulates the wait time of a safe's mechanism
+                    time.sleep(0.05)
                     if int(x) != int(y):
                         return False
                 return True
