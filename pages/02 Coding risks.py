@@ -5,7 +5,7 @@ from streamlit_ace import st_ace
 st.set_page_config(
     layout="wide",
 )
-tab1, tab2, tab3  = st.tabs(["vulnerabilities & exploits", "path traversal", "remote code execution"])
+tab1, tab2, tab3  = st.tabs(["Vulnerabilities & exploits", "path traversal", "remote code execution"])
 
 
 with tab1:
@@ -20,7 +20,7 @@ with tab1:
         st.markdown(
         """
         - SQL Injection
-        - Denial of Service (DoS) and Distributed Denial of Service (DDoS)
+        - Deserialization
         - Remote Code Execution (RCE)
         - Path traversal or ../ 
         """) 

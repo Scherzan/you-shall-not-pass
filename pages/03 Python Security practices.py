@@ -33,7 +33,7 @@ with tab0:
    ### How about Code scanning
    - They raise the general coding hygiene
    - Reduce Code smells
-   - Many automatically show possible vulneratbilites
+   - Many automatically show possible vulnerabilites
    - Makes it easier to have a basic overview over dependencies and known vulnerabilities with static code scanners
 
    #### There are many linters to choose from:
@@ -42,15 +42,15 @@ with tab0:
    - pycodestyle
    - pylama (actually combines many linters and other tools)
    - Bandit
-   """) # Auf security aspect von linter eingehen warum hilfreich für code security
-   # am besten anhand des code Beispiels
+   """) 
       
    st.button("Show Bandit example", on_click=switch_click, args=["bandit_on"])
 
    with open("code_scanners_examples/bandit_report.txt", "r") as file:
-      file_contents = file.read()
+      bandit_contents = file.read()
    if st.session_state["bandit_on"]:
-      st.code(file_contents, language="bash")
+      st.code(bandit_contents, language="bash")
+   
    st.markdown("""
    #### Dependency scanners, that search your tree known CVEs and other risks:
    - Safety 
@@ -72,68 +72,11 @@ with tab1:
 
    st.markdown("#### Github action example to follow:")
    st.button("show Github actions example", on_click=switch_click, args=["github_action"])
+
+   with open(".github/workflows/main.yml", "r") as file:
+      action_content = file.read()
    if st.session_state["github_action"]:
-      st.code("""
-   name: Code Scanning
-
-   on:
-   push:
-      branches:
-         - main
-         - RomKra-patch-1
-   pull_request:
-      branches:
-         - main
-
-   jobs:
-   code-scanning:
-      runs-on: ubuntu-latest
-
-      steps:
-         - name: Checkout Repository
-         uses: actions/checkout@v4
-
-         - name: Set up Python
-         uses: actions/setup-python@v5
-         with:
-            python-version: '3.x'
-
-         - name: Install Poetry
-         uses: snok/install-poetry@v1
-
-         - name: Install Dependencies
-         run: |
-            poetry install
-
-         - name: Run pylint
-         run: |
-            poetry run pylint code_scanners_examples/bad_linting.py --output-format=parseable > pylint_report.txt
-         continue-on-error: true
-
-         - name: Run radon
-         run: |
-            poetry run radon cc code_scanners_examples/bad_complexity.py --json > radon_report.json
-         continue-on-error: true
-
-         - name: Export Requirements
-         run: |
-            poetry export --format requirements.txt --output requirements.txt
-
-         - name: Run safety
-         run: |
-            poetry run safety check -r requirements.txt --json > safety_report.json
-         continue-on-error: true
-
-         - name: Upload Reports
-         uses: actions/upload-artifact@v4
-         with:
-            name: code-reports
-            path: |
-               pylint_report.txt
-               radon_report.json
-               safety_report.json
-
-   """, language="bash")
+      st.code(action_content, language="yaml")
 
    st.markdown("""
    ### How can I publish my package on PyPi?
