@@ -50,12 +50,14 @@ with tab0:
       bandit_contents = file.read()
    if st.session_state["bandit_on"]:
       st.code(bandit_contents, language="bash")
+      st.button("Hide Bandit example", on_click=switch_click, args=["bandit_on"])   
    
    st.markdown("""
    #### Dependency scanners, that search your tree known CVEs and other risks:
    - Safety 
    - Dependency-Check
    - pip-audit
+   
    Find a comprehensive list here: https://owasp.org/www-community/Source_Code_Analysis_Tools
    """)
 
@@ -77,9 +79,10 @@ with tab1:
       action_content = file.read()
    if st.session_state["github_action"]:
       st.code(action_content, language="yaml")
+      st.button("Hide Github actions example", on_click=switch_click, args=["github_action"])
 
    st.markdown("""
-   ### How can I publish my package on PyPi?
+   ### I want to publish my Code as a package on PyPi?
    - automate chosen scanners 
    - use automated pipeline
    - PyPi Account since beginning of the year with 2FA  
