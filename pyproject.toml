@@ -14,13 +14,12 @@ streamlit-code-editor = "^0.1.12"
 streamlit-ace = "^0.1.1"
 pyyaml = "5.3"
 flask = "^3.0.3"
-pylint = "^3.1.0"
-radon = "^6.0.1"
 safety = "^3.1.0"
 tk = "^0.1.0"
 pip-tools = "^7.4.1"
 pip-audit = "2.7.2"
 bandit = "1.6"
+semgrep = "^1.69.0"
 
 
 [build-system]

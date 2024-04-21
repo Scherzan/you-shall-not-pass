@@ -1,6 +1,6 @@
 import gradio as gr
 
-demo_img = "./pages/scripts/assets/skull-and-crossbones.png"
+demo_img = "./pages/assets/skull-and-crossbones.png"
 
 def show_image(img, exit_text):
     if exit_text=="exit":

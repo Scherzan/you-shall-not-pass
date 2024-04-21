@@ -7,7 +7,7 @@ def check_password(password):
     if len(password) != len(real_password):
         return False
     for x, y in zip(password, real_password):
-        time.sleep(0.05) # Simulates the wait time of the safe's mechanism
+        time.sleep(0.05) 
         if int(x) != int(y):
             return False
     return True
