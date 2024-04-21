@@ -20,6 +20,7 @@ safety = "^3.1.0"
 tk = "^0.1.0"
 pip-tools = "^7.4.1"
 pip-audit = "2.7.2"
+semgrep = "^1.69.0"
 
 
 [build-system]
