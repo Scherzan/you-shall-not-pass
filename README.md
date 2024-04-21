@@ -1,2 +1,6 @@
-# The repo contains the material to our PyconDE talk:
+# Repo to PyConDE2024 Talk
+
+![alt text](Isolated.png "Title")
+
+
 

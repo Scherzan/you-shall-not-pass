@@ -39,12 +39,11 @@ with col1:
 
 
     st.write('#')
-
-    st.markdown('''# Antonia Scherz, Roman Krafft''')
-    st.markdown('''### 22.-24.04.2024''')
-    st.markdown('''### PyCon DE & PyData Berlin 2024''')
+    col1, mid, col2 = st.columns((1,3,1))
+    with col1:
+        st.markdown('''### Antonia Scherz, Roman Krafft''')
+    st.markdown('''#### PyCon DE & PyData Berlin 2024''')
+    st.image("./pages/assets/pycon_pydata_logo.png", width = 500)
 
 with col2:
     st.write('#')
-    #image = Image.open("pages/images/pycon_pydata_logo.png")
-    #st.image(image, width = 400)
