@@ -1,0 +1,121 @@
+Run started:2024-04-21 20:25:29.372676
+
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./code_scanners_examples/bad_security.py:2:0
+1	import os
+2	import subprocess
+3	import pickle
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./code_scanners_examples/bad_security.py:3:0
+2	import subprocess
+3	import pickle
+4	import sqlite3
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./code_scanners_examples/bad_security.py:9:12
+8	    # Hardcoded SQL query vulnerable to injection
+9	    query = "SELECT * FROM users WHERE username='" + user_input + "'"
+10	    conn = sqlite3.connect('example.db')
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b605_start_process_with_a_shell.html
+   Location: ./code_scanners_examples/bad_security.py:18:4
+17	def command_injection(user_input):
+18	    os.system("echo " + user_input)
+19	
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/blacklists/blacklist_calls.html#b307-eval
+   Location: ./code_scanners_examples/bad_security.py:22:13
+21	def insecure_eval(user_input):
+22	    result = eval(user_input)
+23	    return result
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b102_exec_used.html
+   Location: ./code_scanners_examples/bad_security.py:27:4
+26	def dangerous_builtin_functions(user_input):
+27	    exec(user_input)
+28	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./code_scanners_examples/bad_security.py:31:11
+30	def insecure_deserialization(serialized_data):
+31	    data = pickle.loads(serialized_data)
+32	    return data
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b605_start_process_with_a_shell.html
+   Location: ./code_scanners_examples/bad_security.py:36:4
+35	def insecure_os_system(user_input):
+36	    os.system(user_input)
+37	
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./code_scanners_examples/bad_security.py:40:4
+39	def subprocess_shell_true(user_input):
+40	    subprocess.Popen(user_input, shell=True)
+41	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'very_secure_1234'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.8/plugins/b105_hardcoded_password_string.html
+   Location: ./code_scanners_examples/bad_security.py:45:15
+44	    admin = "admin_user"
+45	    password = "very_secure_1234"
+46	    user_input = "Enter something: "
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 35
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 3
+		Medium: 4
+		High: 3
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 1
+		Medium: 1
+		High: 8
+Files skipped (0):

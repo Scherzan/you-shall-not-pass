@@ -28,9 +28,9 @@ jobs:
         run: |
           poetry install
 
-      - name: Run pylint
+      - name: Run bandit
         run: |
-          poetry run pylint code_scanners_examples/bad_linting.py --output-format=parseable > pylint_report.txt
+          poetry run bandit -f txt -o code_scanners_examples/bandit_report.txt bandit_report.py 
         continue-on-error: true
 
       - name: Run radon
@@ -52,6 +52,6 @@ jobs:
         with:
           name: code-reports
           path: |
-            pylint_report.txt
+            bandit_report.txt
             radon_report.json
             safety_report.json
