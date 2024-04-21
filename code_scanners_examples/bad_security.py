@@ -1,49 +1,54 @@
 import os
 import subprocess
+import pickle
+import sqlite3
 
-# Hardcoded credentials
-username = "admin"
-password = "password"
+# Vulnerability: Hardcoded SQL injection
+def sql_injection_vulnerability(user_input):
+    # Hardcoded SQL query vulnerable to injection
+    query = "SELECT * FROM users WHERE username='" + user_input + "'"
+    conn = sqlite3.connect('example.db')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    conn.close()
 
-def execute_command(command):
-    subprocess.Popen(command, shell=True)
-
-def insecure_crypto():
-    key = "my_secret_key"
-    # Insecure use of cryptography
-    encrypted_data = os.urandom(16)
-    return encrypted_data
-
-def unsafe_deserialization(data):
-    # Unsafe deserialization
-    import pickle
-    obj = pickle.loads(data)
-    return obj
-
+# Vulnerability: Command injection
 def command_injection(user_input):
-    # Command injection vulnerability
     os.system("echo " + user_input)
 
-def insecure_temp_file():
-    # Insecure use of temporary file
-    tempfile = "/tmp/tempfile.txt"
-    with open(tempfile, "w") as f:
-        f.write("Sensitive data")
-
-def use_of_eval(code):
-    # Use of eval
-    result = eval(code)
+# Vulnerability: Use of eval
+def insecure_eval(user_input):
+    result = eval(user_input)
     return result
 
+# Vulnerability: Use of dangerous built-in functions
+def dangerous_builtin_functions(user_input):
+    exec(user_input)
+
+# Vulnerability: Use of insecure deserialization
+def insecure_deserialization(serialized_data):
+    data = pickle.loads(serialized_data)
+    return data
+
+# Vulnerability: Use of os.system
+def insecure_os_system(user_input):
+    os.system(user_input)
+
+# Vulnerability: Use of subprocess with shell=True
+def subprocess_shell_true(user_input):
+    subprocess.Popen(user_input, shell=True)
+
 if __name__ == "__main__":
-    # Unsafely using user input
-    user_input = input("Enter your name: ")
-    print("Hello, " + user_input)
 
-    # Calling functions with known security vulnerabilities
+    admin = "admin_user"
+    password = "very_secure_1234"
+    user_input = "Enter something: "
+
+    # Calling vulnerable functions with user input
     command_injection(user_input)
-    insecure_temp_file()
-
-    # Using eval with user input
-    code = input("Enter Python code to evaluate: ")
-    use_of_eval(code)
+    insecure_eval(user_input)
+    dangerous_builtin_functions(user_input)
+    insecure_deserialization(user_input)
+    insecure_os_system(user_input)
+    subprocess_shell_true(user_input)
