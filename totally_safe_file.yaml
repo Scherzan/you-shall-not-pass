@@ -211,6 +211,17 @@ database:
         - !!python/name:exec
         - [ import subprocess,
             import sys,
-            'subprocess.check_call([sys.executable, "-m", "pip", "install",  "-q", "PyMsgBox"])',
-            import pymsgbox,
-            'pymsgbox.alert("Congratulation", "You executed random Code")']
+            title = "Congratulations",
+            message = "you executed random Code",
+            'subprocess.check_call([sys.executable, "-m", "pip", "install",  "-q", "pyqt5"])',
+            from PyQt5.QtWidgets import *,
+            from PyQt5.QtGui import *,
+            app = QApplication(sys.argv),
+
+            message_box = QMessageBox(),
+            message_box.setWindowTitle(title),
+            message_box.setText(message)
+            font = QFont()
+            font.setPointSize(20)
+            message_box.setFont(font)
+            message_box.exec_()']
