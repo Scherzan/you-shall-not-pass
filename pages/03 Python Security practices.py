@@ -12,8 +12,8 @@ tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in
 # Einleitung nach Coding riskis > What to to to stay secure?
 # Prepared a pseudo FAQ
 with tab0:
-   if "pylint_on" not in st.session_state:
-      st.session_state["pylint_on"] = False
+   if "bandit_on" not in st.session_state:
+      st.session_state["bandit_on"] = False
    if "safety_on" not in st.session_state:
       st.session_state["safety_on"] = False
    if "github_action" not in st.session_state:
@@ -21,7 +21,7 @@ with tab0:
 
 
    def switch_click(input):
-      switches = ["pylint_on", "radon_on", "safety_on", "github_action"]
+      switches = ["bandit_on", "radon_on", "safety_on", "github_action"]
       switches.remove(input)
       for switch in switches:
          st.session_state[switch] = False
@@ -30,54 +30,132 @@ with tab0:
 
    st.markdown(
    """
-   ### Good starting points include:
-   - Enhance code quality with linters
-   - Detect vulnerabilities with static code scanners
+   ### How about Code scanning
+   - They raise the general coding hygiene
+   - Reduce Code smells
+   - Many automatically show possible vulneratbilites
+   - Makes it easier to have a basic overview over dependencies and known vulnerabilities with static code scanners
 
    #### There are many linters to choose from:
    - Pylint 
    - Flake8
    - pycodestyle
    - pylama (actually combines many linters and other tools)
+   - Bandit
    """) # Auf security aspect von linter eingehen warum hilfreich für code security
    # am besten anhand des code Beispiels
       
-   st.button("Activate Pylint example", on_click=switch_click, args=["pylint_on"])
+   st.button("Show Bandit example", on_click=switch_click, args=["bandit_on"])
 
-   if st.session_state["pylint_on"]:
+   if st.session_state["bandit_on"]:
       st.code("""
-   pylint code_scanners_examples/bad_linting.py 
+   bandit code_scanners_examples/bad_security.py 
                
-   ************* Module bad_linting
-   code_scanners_examples/bad_linting.py:16:0: W0311: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
-   code_scanners_examples/bad_linting.py:28:0: C0301: Line too long (168/100) (line-too-long)
-   code_scanners_examples/bad_linting.py:32:0: W0311: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
-   code_scanners_examples/bad_linting.py:34:0: C0304: Final newline missing (missing-final-newline)
-   code_scanners_examples/bad_linting.py:34:0: W0311: Bad indentation. Found 2 spaces, expected 4 (bad-indentation)
-   code_scanners_examples/bad_linting.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-   code_scanners_examples/bad_linting.py:1:0: C0116: Missing function or method docstring (missing-function-docstring)
-   code_scanners_examples/bad_linting.py:4:0: C0103: Constant name "result" doesn't conform to UPPER_CASE naming style (invalid-name)
-   code_scanners_examples/bad_linting.py:8:0: C0103: Constant name "unused_variable" doesn't conform to UPPER_CASE naming style (invalid-name)
-   code_scanners_examples/bad_linting.py:11:0: C0116: Missing function or method docstring (missing-function-docstring)
-   code_scanners_examples/bad_linting.py:11:0: C0103: Function name "InvalidFunctionName" doesn't conform to snake_case naming style (invalid-name)
-   code_scanners_examples/bad_linting.py:15:0: C0116: Missing function or method docstring (missing-function-docstring)
-   code_scanners_examples/bad_linting.py:19:6: E0602: Undefined variable 'undefined_variable' (undefined-variable)
-   code_scanners_examples/bad_linting.py:22:0: C0116: Missing function or method docstring (missing-function-docstring)
-   code_scanners_examples/bad_linting.py:28:0: C0103: Constant name "long_variable_name_for_testing_purpose" doesn't conform to UPPER_CASE naming style (invalid-name)
+   Run started:2024-04-21 11:09:36.255452
 
-   -----------------------------------
-   Your code has been rated at 0.00/10""", language="bash")
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
+   Severity: Low   Confidence: High
+   Location: code_scanners_examples/bad_security.py:2
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b404-import-subprocess
+1       import os
+2       import subprocess
+3
+4       # Hardcoded credentials
+5       username = "admin"
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:9
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b602_subprocess_popen_with_shell_equals_true.html
+8       def execute_command(command):
+9           subprocess.Popen(command, shell=True)
+10
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   Location: code_scanners_examples/bad_security.py:19
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b403-import-pickle
+18          # Unsafe deserialization
+19          import pickle
+20          obj = pickle.loads(data)
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   Location: code_scanners_examples/bad_security.py:20
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b301-pickle
+19          import pickle
+20          obj = pickle.loads(data)
+21          return obj
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:25
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html
+24          # Command injection vulnerability
+25          os.system("echo " + user_input)
+26
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   Location: code_scanners_examples/bad_security.py:35
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b307-eval
+34          # Use of eval
+35          result = eval(code)
+36          return result
+
+--------------------------------------------------
+>> Issue: [B322:blacklist] The input method in Python 2 will read from standard input, evaluate and run the resulting string as python source code. This is similar, though in many ways worse, then using eval. On Python 2, use raw_input instead, input is safe in Python 3.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:40
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b322-input
+39          # Unsafely using user input
+40          user_input = input("Enter your name: ")
+41          print("Hello, " + user_input)
+
+--------------------------------------------------
+>> Issue: [B322:blacklist] The input method in Python 2 will read from standard input, evaluate and run the resulting string as python source code. This is similar, though in many ways worse, then using eval. On Python 2, use raw_input instead, input is safe in Python 3.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:48
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b322-input
+47          # Using eval with user input
+48          code = input("Enter Python code to evaluate: ")
+49          use_of_eval(code)
+
+--------------------------------------------------
+
+Code scanned:
+        Total lines of code: 30
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0.0
+                Low: 2.0
+                Medium: 2.0
+                High: 4.0
+        Total issues (by confidence):
+                Undefined: 0.0
+                Low: 0.0
+                Medium: 0.0
+                High: 8.0
+Files skipped (0):""", language="bash")
 
    st.markdown("""
-   #### Static Code Scanners that search for known vulnerabilities and other risks:
+   #### Dependency scanners, that search your tree known CVEs and other risks:
    - Safety (demo below)
-   - Bandit
    - SnykCode
-   - ...
+   - Synk
+   - Dependency-Check
    Find a comprehensive list here: https://owasp.org/www-community/Source_Code_Analysis_Tools
    """)
 
-   st.button("Activate Safety example", on_click=switch_click, args=["safety_on"])
+   st.button("Show Safety example", on_click=switch_click, args=["safety_on"])
    if st.session_state["safety_on"]:
       st.markdown("""
    safety check -r code_scanners_examples/bad_requirements.txt
@@ -514,7 +592,7 @@ with tab1:
    - use automated pipeline
    - PyPi Account since beginning of the year with 2FA  
    - Check workflow here: https://packaging.python.org/en/latest/tutorials/packaging-projects/
-   - generally there are low requirement to publish on PyPi (It makes it easy for us and for bad actors
+   - generally there are low requirement to publish on PyPi (It makes it easy for us and for bad actors)
    """)
 
 with tab2:
