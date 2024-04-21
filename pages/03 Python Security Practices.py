@@ -6,10 +6,9 @@ st.set_page_config(
 )
 
 
-tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in a GitHub repo.", "How to check packages before installing?", "Is dependency management important?", "stay informed"])
+tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in a GitHub repo...", "How to check packages before installing?", "Is dependency management important?", "Stay informed."])
 
 
-# Einleitung nach Coding riskis > What to to to stay secure?
 # Prepared a pseudo FAQ
 with tab0:
    if "bandit_on" not in st.session_state:
@@ -125,57 +124,56 @@ with tab2:
 
 with tab3:
    st.markdown("### Dependency management is key.")
-   dep_management = st.checkbox("Make sure you have repeatable and deterministic installations.") 
-   if dep_management:
-      lockfiles = st.checkbox("Use Lockfiles. (Pinned Package Vrsions, hashes, all dependencies.)", value=True)
-      requirements_file = st.checkbox("requirements.txt", value=True)
-      if requirements_file:
-         st.code("""
-                # strict dependencies
-                aiofiles==23.2.1\n
-                altair==5.3.0\n
-                annotated-types==0.6.0\n
-                anyio==4.3.0\n
-                astroid==3.1.0\n
-                attrs==23.2.0\n
-                \n
-                # loose dependencies
-                Authlib
-                blinker
-                cachetools""")
+   col1, col2 = st.columns(2)
+   with col1:
+      dep_management = st.checkbox("Make sure you have repeatable and deterministic installations.") 
+      if dep_management:
+         lockfiles = st.checkbox("Use Lockfiles with pinned package versions, hashes and the full dependency tree.)", value=True)
+         requirements_file = st.checkbox("requirements.txt", value=True)
+
+         with col2:
+            if requirements_file:
+               st.code("""
+                      # strict dependencies
+                      aiofiles==23.2.1\n
+                      altair==5.3.0\n
+                      annotated-types==0.6.0\n
+                      ...
+                      # loose dependencies
+                      Authlib
+                      blinker
+                      cachetools""")
       
-   scan_dep = st.checkbox("Use tool like pip-audit to scan your dependency tree before going public")
+   scan_dep = st.checkbox("Use a tool like pip-audit to scan your dependencies before going public")
    if scan_dep:
       st.image("./pages/assets/pip_audit.png")
-      st.image("./pages/assets/pip-audit_pypi.png")
 
-   advanced = st.checkbox("Advanced using your own pypi repo locally (comapny level).")
-   if advanced:
-      hashes = st.checkbox("Check hashvalues before installing. -> Avoid confusion of local and pypi repo packages")
-   docker_option = st.checkbox("Consider package application into docker, if no active collaboration is ongoing.")
+   advanced = st.checkbox("Advanced using your own pypi repo locally (more company level solution).")
 
 
 with tab4:
    col1, col2 = st.columns(2)
    with col1:
-      st.header("List of Tools:")
+      st.header("Tools & Ressources:")
       st.subheader("Software")
-      st.write("GuardDog: ")
+      st.write("GuardDog: https://github.com/DataDog/guarddog")
       st.write("Sanbox package installations: https://blog.phylum.io/sandboxing-package-installations-arms-developers-with-defense-against-open-source-attacks-and-unintended-consequences/")
+      st.write("Semgrep Playground for code security heuristics: https://semgrep.dev/playground/new")
       st.subheader("Databases")
       st.write("https://www.cve.org/ Official vulnerability Database (Search for Python)")
       st.write("https://security.snyk.io/ Based on CVE database with extended information on Poc and Fixes")
       st.subheader("Get involved:")
       st.write("Get startet with ethical hacking: https://snyk.io/ethical-hacking-resources/")
-      st.write("Get startet Cyber Security:")
-      st.write("Bug Bounty Programs: ")
-
-   with col2:
-      st.header("List of ressources:")
+      st.write("Python Software Foundation. https://www.python.org/psf/get-involved/")
       st.subheader("Organisations & Ressources")
       st.write("https://cheatsheetseries.owasp.org/ Collection of specific application security topics")
       st.write("https://www.python.org/dev/security/ Reporting Security Issues with PyPi")
       st.write("https://pyfound.blogspot.com/2024/04/new-open-initiative-for-cybersecurity.html Python Software Foundation Open Source Security Efforts")   
+      
+
+   with col2:
+      st.markdown("#")
+      st.markdown("#")
       st.subheader("Blogs")
       st.write("The Python Package Index Blog: https://blog.pypi.org/ (Well curated news on PyPi specific issues)")
       st.write("GitGuardian Blog: https://blog.gitguardian.com/")
@@ -190,15 +188,4 @@ with tab4:
                https://www.youtube.com/watch?v=VWWgkF-0cDQ
                """)
 
-      # maybes: https://snyk.io/platform/git-repository-security/
-      # code checker: https://snyk.io/code-checker/
-      # code review cheat sheet: https://res.cloudinary.com/snyk/images/v1/wordpress-sync/Snyk-Secure-Code-Review-Cheat-Sheet/Snyk-Secure-Code-Review-Cheat-Sheet.pdf
-      # tutorial timing attacks python: https://sqreen.github.io/DevelopersSecurityBestPractices/timing-attack/python
 
-
-# still check out:
-#vulnerability notifications - interact with lockfiles
-# - notification on changes or new versions in dependencies (f.e. new vulnerability discovered)
-# - Tool PyUp, Dependabot (check on warehouse PyPI  automated pull request notifications)
-# - usefull because fast notification on compromised packages and speed up upgrade path - merge as soon as new vulnerability is out
-# - practices run CI  and dependency checks every time  a/this pull request is made no manual update like run pip compile necessary

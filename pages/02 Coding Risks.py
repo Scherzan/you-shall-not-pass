@@ -5,7 +5,7 @@ from streamlit_ace import st_ace
 st.set_page_config(
     layout="wide",
 )
-tab1, tab2, tab3  = st.tabs(["Vulnerabilities & exploits", "path traversal", "remote code execution"])
+tab1, tab2, tab3  = st.tabs(["Vulnerabilities & Exploits", "Path Traversal", "Remote Code Execution"])
 
 
 with tab1:

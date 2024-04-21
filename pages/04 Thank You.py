@@ -65,6 +65,6 @@ with colx:
 
 with colz:
     st.write("")
-    st.write("[https://www.linkedin.com/in/roman-krafft-1b034620b/](%s)" % "https://www.linkedin.com/in/roman-krafft-1b034620b/")
+    st.write("[https://github.com/Scherzan/you-shall-not-pass](%s)" % "https://github.com/Scherzan/you-shall-not-pass")
 
 
