@@ -1,0 +1,97 @@
+Run started:2024-04-21 19:47:28.431268
+Files in scope (1):
+	code_scanners_examples/bad_security.py (score: {SEVERITY: 51, CONFIDENCE: 80})
+Files excluded (0):
+
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
+   Severity: Low   Confidence: High
+   Location: code_scanners_examples/bad_security.py:2
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b404-import-subprocess
+1	import os
+2	import subprocess
+3	import pickle
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   Location: code_scanners_examples/bad_security.py:3
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b403-import-pickle
+2	import subprocess
+3	import pickle
+4	
+5	# Vulnerability: Command injection
+6	def command_injection(user_input):
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:7
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html
+6	def command_injection(user_input):
+7	    os.system("echo " + user_input)
+8	
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   Location: code_scanners_examples/bad_security.py:11
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b307-eval
+10	def insecure_eval(user_input):
+11	    result = eval(user_input)
+12	    return result
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   Location: code_scanners_examples/bad_security.py:16
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b102_exec_used.html
+15	def dangerous_builtin_functions(user_input):
+16	    exec(user_input)
+17	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   Location: code_scanners_examples/bad_security.py:20
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b301-pickle
+19	def insecure_deserialization(serialized_data):
+20	    data = pickle.loads(serialized_data)
+21	    return data
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:25
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html
+24	def insecure_os_system(user_input):
+25	    os.system(user_input)
+26	
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   Location: code_scanners_examples/bad_security.py:29
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b602_subprocess_popen_with_shell_equals_true.html
+28	def subprocess_shell_true(user_input):
+29	    subprocess.Popen(user_input, shell=True)
+30	
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 27
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0.0
+		Low: 2.0
+		Medium: 3.0
+		High: 3.0
+	Total issues (by confidence):
+		Undefined: 0.0
+		Low: 0.0
+		Medium: 0.0
+		High: 8.0
+Files skipped (0):
