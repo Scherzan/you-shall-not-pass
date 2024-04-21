@@ -1,6 +1,17 @@
 import os
 import subprocess
 import pickle
+import sqlite3
+
+# Vulnerability: Hardcoded SQL injection
+def sql_injection_vulnerability(user_input):
+    # Hardcoded SQL query vulnerable to injection
+    query = "SELECT * FROM users WHERE username='" + user_input + "'"
+    conn = sqlite3.connect('example.db')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    conn.close()
 
 # Vulnerability: Command injection
 def command_injection(user_input):
