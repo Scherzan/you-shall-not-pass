@@ -20,21 +20,13 @@ with tab1:
         st.markdown(
         """
         - SQL Injection
-        - Buffer Overflow 
         - Denial of Service (DoS) and Distributed Denial of Service (DDoS)
         - Remote Code Execution (RCE)
         - Path traversal or ../ 
-        """) # Buffer overflows sin eher ein Problem in C und Python basiert auf C richtig? Vllt lieber auf direkte vulnerabilities in Python konzentrieren?
-        # Oder mit erklären warum das ein Problem ist.
+        """) 
 
     with col2:
-        st.markdown("#")
-        st.markdown("#")
-        st.markdown("#")
-        st.markdown("#")
-        st.markdown("#")
-        st.markdown("#")
-        st.markdown("#")
+        st.image("./pages/assets/cve_website.png")
         st.image("./pages/assets/SQL_injection.png")
 
 with tab2:
