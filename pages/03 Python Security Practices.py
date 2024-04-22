@@ -6,7 +6,7 @@ st.set_page_config(
 )
 
 
-tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in a GitHub repo...", "How to check packages before installing?", "Is dependency management important?", "Stay informed."])
+tab0, tab1, tab2, tab3, tab4  = st.tabs(["Where do I start?", "I have my code in a GitHub repo...", "How to check pip packages before installing?", "What to look for in dependency management?", "Where can I find more information?"])
 
 
 # Prepared a pseudo FAQ
@@ -93,34 +93,34 @@ with tab2:
    st.markdown("### I googeled how to ... and the solution suggests to pip install some package.")
    col1, col2 = st.columns(2)
    with col1:
-      caution = st.checkbox("Be cautious, visit the page and check for a git repository")
+      caution = st.checkbox("Be cautious, visit the page and check for a git repository.")
       if caution:
-          auditing = st.checkbox("Check for high risk python expressions: subprocess.run , exec and eval functions")
+          auditing = st.checkbox("Check for high risk python expressions such as subprocess.run, exec and eval functions.")
           if auditing:
-              init_check = st.checkbox("Check common places for malicious code in __init__ file or setup.py")
+              init_check = st.checkbox("Check common places for malicious code in __init__.py file or setup.py.")
               if init_check:
-                  check_for_http = st.checkbox("Check for http requests exfiltrating system information")
+                  check_for_http = st.checkbox("Check for http requests exfiltrating system information.")
                   with col2:
                      if check_for_http:
                         st.image("./pages/assets/git_search.png")
 
-   st.markdown("### I am still not confident or want more proof")
+   st.markdown("### I am still not confident or want more proof.")
    col1, col2 = st.columns(2)
    with col1:   
-      check_vulnerability_db = st.checkbox("Check databse for reports on the package: i.e. snyk database")
+      check_vulnerability_db = st.checkbox("Check databse for reports on the package: i.e. snyk database.")
       if check_vulnerability_db:
           st.write("https://security.snyk.io/vuln/pip")
           with col2:
             st.image("./pages/assets/search_snyk.png")
-          automated_pypi_check = st.checkbox("Identify malicious PyPI packages with guardDog")
+          automated_pypi_check = st.checkbox("Identify malicious PyPI packages before download with guardDog.")
           if automated_pypi_check:
              st.write("guardDog: https://github.com/DataDog/guarddog")
              download_check = st.checkbox("Download latest package version from pypi and run code checks on code base.")
              if download_check:
-                st.write("Local code scan i.e. with Safety")
+                st.write("Local code scan i.e. with Safety.")
 
    st.markdown("### I want to try out risky packages.")
-   use_phylium = st.checkbox("Use sandbox environment. i.e. phylum CLI with poetry support")
+   use_phylium = st.checkbox("Use a sandbox environment i.e. phylum CLI with poetry support.")
    if use_phylium:
       st.write("Sanbox package installations: https://blog.phylum.io/sandboxing-package-installations-arms-developers-with-defense-against-open-source-attacks-and-unintended-consequences/")
    
@@ -147,11 +147,11 @@ with tab3:
                       blinker
                       cachetools""")
       
-   scan_dep = st.checkbox("Use a tool like pip-audit to scan your dependencies before going public")
+   scan_dep = st.checkbox("Use a tool like pip-audit to scan your dependencies before going public.")
    if scan_dep:
       st.image("./pages/assets/pip_audit.png")
 
-   advanced = st.checkbox("Advanced using your own pypi repo locally (more company level solution).")
+   advanced = st.checkbox("Advanced using your own pypi repo locally (more a company level solution).")
 
 
 with tab4:

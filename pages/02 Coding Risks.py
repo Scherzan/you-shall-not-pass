@@ -66,6 +66,7 @@ with tab2:
         # When the user submits the script name, run the shell script
         if st.button('Run the gradio app'):
             run_py_script("gradio_app.py")
+        
 
     with col2:
         dummy_cmd = st.text_input(label="file/path/from/gradio", placeholder = 'https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/')
@@ -74,6 +75,14 @@ with tab2:
         content = st_ace(language='css', theme="terminal", wrap=True)
 
         st.image("./pages/assets/gradio_demo.jpg")
+    
+    st.markdown("#")
+    st.markdown("#")
+    st.markdown("#")
+    if st.button('Show Backup Screenshots'):
+        st.image("./pages/assets/backup1.png")
+        st.image("./pages/assets/backup2.png") 
+        st.image("./pages/assets/backup3.png")    
 
 
 
