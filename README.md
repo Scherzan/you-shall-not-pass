@@ -50,7 +50,7 @@ Python Software Foundation Open Source Security Efforts: https://pyfound.blogspo
 
 ### Blogs
 **The Python Package Index Blog** (curated news on PyPi specific issues): https://blog.pypi.org/  
-**GitGuardian Blog**: https://blog.gitguardian.com/
+**GitGuardian Blog**: https://blog.gitguardian.com/  
 **Phylium Research Blog** (security reasearch): https://blog.phylum.io/tag/research/  
 **Snyk Blog** (articels among others on AI topcs): https://snyk.io/blog/  
 
