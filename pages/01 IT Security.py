@@ -23,7 +23,8 @@ with tab1:
         🔐 practice password hygiene \n
         📱 when possible add 2FA \n 
         😷 use Antivirus Software \n
-        🧱  keep active Firewall \n
+        🧱 keep active Firewall \n
+        📧 don't open files and links in phising mail 
         """)
 
     st.code("pip install amtplotlib # installing matplotlib")

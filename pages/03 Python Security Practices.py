@@ -151,7 +151,7 @@ with tab3:
    if scan_dep:
       st.image("./pages/assets/pip_audit.png")
 
-   advanced = st.checkbox("Advanced using your own pypi repo locally (more a company level solution).")
+   advanced = st.checkbox("Advanced: Using your own pypi repo locally (more a company level solution).")
 
 
 with tab4:
@@ -162,6 +162,8 @@ with tab4:
       st.write("GuardDog: https://github.com/DataDog/guarddog")
       st.write("Sanbox package installations: https://blog.phylum.io/sandboxing-package-installations-arms-developers-with-defense-against-open-source-attacks-and-unintended-consequences/")
       st.write("Semgrep Playground for code security heuristics: https://semgrep.dev/playground/new")
+      st.write("Pip dependency management tools: https://pip-tools.readthedocs.io/en/stable/")
+      #st.write("Scan for leaked secrets: https://github.com/blacklanternsecurity/badsecrets (we did not test this)")
       st.subheader("Databases")
       st.write("https://www.cve.org/ Official vulnerability Database (Search for Python)")
       st.write("https://security.snyk.io/ Based on CVE database with extended information on Poc and Fixes")
