@@ -5,37 +5,39 @@ from streamlit_ace import st_ace
 st.set_page_config(
     layout="wide",
 )
-tab1, tab2, tab3  = st.tabs(["Vulnerabilities & Exploits", "Path Traversal", "Remote Code Execution"])
+tab1, tab2, tab3 = st.tabs(
+    ["Vulnerabilities & Exploits", "Path Traversal", "Remote Code Execution"]
+)
 
 
 with tab1:
-    
     col1, col2 = st.columns(2)
     with col1:
         st.markdown(
-        """
+            """
         ## Vulnerabilities, Bugs and Exploits in Python
-        """)
+        """
+        )
         st.image("./pages/assets/vunerabilityvsbug.jpeg")
         st.markdown(
-        """
+            """
         - SQL Injection
         - Deserialization
         - Remote Code Execution (RCE)
         - Path traversal or ../ 
-        """) 
+        """
+        )
 
     with col2:
         st.image("./pages/assets/cve_website.png")
         st.image("./pages/assets/SQL_injection.png")
 
 with tab2:
-    
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.image("./pages/assets/gradio_cve.png")
-        
+
         code_text = """ 
              import gradio as gr
 
@@ -54,45 +56,53 @@ with tab2:
         st.code(code_text)
 
         def run_py_script(script_name):
-
-             command = ["python", '-u', script_name]
-             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
-             while process.poll() is None:
+            command = ["python", "-u", script_name]
+            process = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                universal_newlines=True,
+            )
+            while process.poll() is None:
                 line = process.stdout.readline()
                 if not line:
                     continue
                 st.write(line.strip())
-        
+
         # When the user submits the script name, run the shell script
-        if st.button('Run the gradio app'):
+        if st.button("Run the gradio app"):
             run_py_script("gradio_app.py")
-        
 
     with col2:
-        dummy_cmd = st.text_input(label="file/path/from/gradio", placeholder = 'https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/')
-        st.write("curl --list-only --path-as-is", dummy_cmd, "../../../path/to/asset.jpeg --output /attacker/home/path/image_copy.jpeg")
-        
-        content = st_ace(language='css', theme="terminal", wrap=True)
+        dummy_cmd = st.text_input(
+            label="file/path/from/gradio",
+            placeholder="https://xxxxxx..xx.gradio.live/file=/tmp/gradio/xxxxx/",
+        )
+        st.write(
+            "curl --list-only --path-as-is",
+            dummy_cmd,
+            "../../../path/to/asset.jpeg --output /attacker/home/path/image_copy.jpeg",
+        )
+
+        content = st_ace(language="css", theme="terminal", wrap=True)
 
         st.image("./pages/assets/gradio_demo.jpg")
-    
-    st.markdown("#")
-    st.markdown("#")
-    st.markdown("#")
-    if st.button('Show Backup Screenshots'):
-        st.image("./pages/assets/backup1.png")
-        st.image("./pages/assets/backup2.png") 
-        st.image("./pages/assets/backup3.png")    
 
+    st.markdown("#")
+    st.markdown("#")
+    st.markdown("#")
+    if st.button("Show Backup Screenshots"):
+        st.image("./pages/assets/backup1.png")
+        st.image("./pages/assets/backup2.png")
+        st.image("./pages/assets/backup3.png")
 
 
 with tab3:
-    
     col1, col2 = st.columns(2)
 
     with col1:
         st.image("./pages/assets/yaml_cve.png")
-        
+
         code_text = """ 
             import yaml
             from yaml import FullLoader
@@ -114,9 +124,9 @@ with tab3:
             config_data = load_config('totally_safe_file.yaml')
             start_server(config_data)"""
         st.code(code_text)
-        
+
         # When the user submits the script name, run the shell script
-        if st.button('Run the Flask app', key="roman_ace_button"):
+        if st.button("Run the Flask app", key="roman_ace_button"):
             run_py_script("yaml_loader_ace.py")
 
     with col2:

@@ -3,44 +3,50 @@ import subprocess
 import pickle
 import sqlite3
 
+
 # Vulnerability: Hardcoded SQL injection
 def sql_injection_vulnerability(user_input):
     # Hardcoded SQL query vulnerable to injection
     query = "SELECT * FROM users WHERE username='" + user_input + "'"
-    conn = sqlite3.connect('example.db')
+    conn = sqlite3.connect("example.db")
     cursor = conn.cursor()
     cursor.execute(query)
-    rows = cursor.fetchall()
     conn.close()
+
 
 # Vulnerability: Command injection
 def command_injection(user_input):
     os.system("echo " + user_input)
+
 
 # Vulnerability: Use of eval
 def insecure_eval(user_input):
     result = eval(user_input)
     return result
 
+
 # Vulnerability: Use of dangerous built-in functions
 def dangerous_builtin_functions(user_input):
     exec(user_input)
+
 
 # Vulnerability: Use of insecure deserialization
 def insecure_deserialization(serialized_data):
     data = pickle.loads(serialized_data)
     return data
 
+
 # Vulnerability: Use of os.system
 def insecure_os_system(user_input):
     os.system(user_input)
+
 
 # Vulnerability: Use of subprocess with shell=True
 def subprocess_shell_true(user_input):
     subprocess.Popen(user_input, shell=True)
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     admin = "admin_user"
     password = "very_secure_1234"
     user_input = "Enter something: "

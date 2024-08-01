@@ -3,11 +3,12 @@ import numpy as np
 
 real_password = "1234"
 
-def check_password(password): 
+
+def check_password(password):
     if len(password) != len(real_password):
         return False
     for x, y in zip(password, real_password):
-        time.sleep(0.05) 
+        time.sleep(0.05)
         if int(x) != int(y):
             return False
     return True
@@ -22,16 +23,18 @@ def brute_force_random():
         else:
             return str(pw_candidate)
 
+
 start_brute_force = time.time()
 cracked_password = brute_force_random()
-end_brute_force  = time.time()
-print(f"""An ordinary brute force attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds.""")
-    
+end_brute_force = time.time()
+print(
+    f"""An ordinary brute force attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds."""
+)
 
 
 # 2. Use a timing attack
 def timimng_attack():
-    pw_candidate = ["0","0","0","0"]
+    pw_candidate = ["0", "0", "0", "0"]
     check_time = 0.052
     for position_dig in range(4):
         for dig in np.arange(0, 10, dtype=int).tolist():
@@ -39,24 +42,27 @@ def timimng_attack():
 
             start = time.time()
             if check_password("".join(pw_candidate)):
-                return "".join(pw_candidate) 
+                return "".join(pw_candidate)
             time_taken = time.time() - start
 
             if time_taken > check_time:
                 check_time = check_time + 0.05
                 break
-  
+
 
 start_brute_force = time.time()
 cracked_password = timimng_attack()
-end_brute_force  = time.time()
-print(f"""The timing attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds.""")
+end_brute_force = time.time()
+print(
+    f"""The timing attack identified {cracked_password} as the real password in {end_brute_force - start_brute_force} seconds."""
+)
 
 
 # 3. Use a password list
-with open('10k-most-common.txt', 'r') as file:
+with open("10k-most-common.txt", "r") as file:
     data = file.read()
-data_into_list = data.split("\n") 
+data_into_list = data.split("\n")
+
 
 def brute_force_list():
     for pw_candidate in data_into_list:
@@ -64,9 +70,10 @@ def brute_force_list():
             continue
         else:
             return str(pw_candidate)
-        
+
+
 start_brute_force = time.time()
 cracked_password = brute_force_list()
-end_brute_force  = time.time()
+end_brute_force = time.time()
 print(f"""Brute force attack using 10k-most-common.txt list on common passwords identified {cracked_password} 
       as the real password in {end_brute_force - start_brute_force} seconds.""")
