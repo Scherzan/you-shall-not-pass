@@ -2,12 +2,35 @@
 
 ![alt text](./pages/assets/mainpage.png " ")
 
-## To Run the Presentation
-To see the presentation clone the repo and run:
+## To see the slides you can follow these steps. 
+You need to have Python 3.10 and uv installed.
 
-     poetry shell
 
-to set up the environment.
+### Clone the repository and navigate to the directory
+
+Use git clone or your preferred method to download/clone the repo.
+
+### Installation with uv
+
+Navigate to your project directory and do:
+
+```bash
+uv venv --python 3.10
+```
+```bash
+source .venv/bin/activate
+```
+```bash
+uv pip install -r requirements.txt
+```
+
+### Start the presentation
+
+Just run:
+
+```bash
+streamlit run Home.py
+```
 
 > ⚠️ This repository depends on old package versions of ```gradio``` and ```pyyaml``` that contain known vulnerabilities. **Be aware that the environment set up installs packages that contain known vulnerabilities** 
 
